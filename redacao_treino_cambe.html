@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treino de Redação — Assistente Administrativo III · Cambé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Spline+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f1e7; --paper:#fffdf8; --ink:#2a2418; --muted:#8a7f6a;
+    --line:#e4dcc9; --accent:#c8761b; --accent-soft:#f5e4cc;
+    --green:#2f8f5b; --green-soft:#dcf0e3; --red:#c0392b; --red-soft:#f6e0dc;
+    --blue:#3a6ea5; --blue-soft:#dde8f3;
+    --shadow:0 2px 14px rgba(80,60,20,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{background:var(--bg);color:var(--ink);font-family:'Spline Sans',sans-serif;
+    line-height:1.55;padding:18px 16px 70px;max-width:780px;margin:0 auto;min-height:100vh;}
+  .kicker{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:1.8rem;line-height:1.05;margin:6px 0 4px;}
+  .lead{color:var(--muted);font-size:.9rem;margin-bottom:22px;}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-bottom:16px;}
+  h2{font-family:'Fraunces',serif;font-size:1.15rem;margin-bottom:10px;}
+  h3{font-family:'Fraunces',serif;font-size:1rem;margin:14px 0 6px;}
+  p{margin-bottom:8px;font-size:.92rem;}
+  ul{margin:4px 0 10px 18px;font-size:.9rem;}
+  li{margin-bottom:4px;}
+
+  /* regras do edital */
+  .rules{background:var(--accent-soft);border-left:3px solid var(--accent);}
+  .rules .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+  .rules .g{background:var(--paper);border-radius:10px;padding:8px 10px;font-size:.82rem;}
+  .rules .g b{display:block;color:var(--accent);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;}
+  .danger{background:var(--red-soft);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:.84rem;color:#7a261c;}
+  .danger b{color:var(--red);}
+
+  /* lista de temas */
+  .theme{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);
+    border-radius:14px;background:var(--paper);cursor:pointer;transition:.15s;width:100%;text-align:left;
+    font-family:inherit;margin-bottom:10px;color:var(--ink);}
+  .theme:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow);}
+  .theme .num{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;
+    display:grid;place-items:center;font-weight:700;flex:0 0 auto;}
+  .theme .tt{flex:1;}
+  .theme .tt b{font-size:.98rem;display:block;}
+  .theme .tt span{font-size:.78rem;color:var(--muted);}
+  .theme .done{font-size:.72rem;color:var(--green);font-weight:700;}
+  .theme .go{color:var(--accent);font-weight:700;font-size:1.2rem;}
+
+  /* editor */
+  #editor{display:none;}
+  .backbtn{background:var(--paper);border:1px solid var(--line);color:var(--ink);font-family:inherit;
+    font-weight:700;font-size:.8rem;padding:8px 13px;border-radius:10px;cursor:pointer;margin-bottom:14px;}
+  .comando{background:var(--blue-soft);border-left:3px solid var(--blue);}
+  .coletanea{font-style:italic;color:#5c5236;background:var(--accent-soft);border-radius:8px;
+    padding:10px 13px;margin-bottom:8px;font-size:.88rem;border-left:3px solid var(--accent);}
+  .src{display:block;font-style:normal;font-size:.74rem;color:var(--muted);margin-top:4px;}
+
+  details{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;background:var(--paper);overflow:hidden;}
+  details summary{cursor:pointer;padding:12px 14px;font-weight:600;font-size:.9rem;list-style:none;display:flex;justify-content:space-between;align-items:center;}
+  details summary::-webkit-details-marker{display:none;}
+  details summary::after{content:'+';color:var(--accent);font-weight:700;font-size:1.2rem;}
+  details[open] summary::after{content:'–';}
+  details .body{padding:0 14px 12px;}
+
+  .writebar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;}
+  .counters{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip{font-size:.76rem;font-weight:700;padding:5px 10px;border-radius:999px;background:var(--line);color:var(--ink);}
+  .chip.ok{background:var(--green-soft);color:var(--green);}
+  .chip.bad{background:var(--red-soft);color:var(--red);}
+  textarea{width:100%;min-height:340px;border:1px solid var(--line);border-radius:12px;padding:14px;
+    font-family:'Spline Sans',sans-serif;font-size:1rem;line-height:1.7;resize:vertical;background:#fffefb;color:var(--ink);}
+  textarea:focus{outline:2px solid var(--accent);border-color:var(--accent);}
+  .savednote{font-size:.74rem;color:var(--green);font-weight:700;height:16px;margin:4px 2px;opacity:0;transition:opacity .4s;}
+
+  .check label{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;padding:7px 0;cursor:pointer;}
+  .check input{margin-top:3px;width:17px;height:17px;flex:0 0 auto;accent-color:var(--green);}
+  .toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .toolbar button{flex:1;min-width:130px;padding:12px;border-radius:12px;font-family:inherit;font-weight:700;
+    font-size:.86rem;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink);}
+  .toolbar .pri{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .toolbar .danger-btn{color:var(--red);border-color:var(--red-soft);}
+  .foot{font-size:.72rem;color:var(--muted);text-align:center;margin-top:18px;line-height:1.6;}
+  .model{font-size:.88rem;color:#5c5236;}
+  .model em{color:var(--accent);font-style:normal;font-weight:600;}
+  @media(max-width:520px){.rules .grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ===================== HOME ===================== -->
+<div id="home">
+  <div class="kicker">Concurso Cambé 001/2026 · UniFil · Prova Discursiva</div>
+  <h1>Treino de Redação</h1>
+  <div class="lead">Dissertação de 15 a 25 linhas. Escolha um tema provável, leia a coletânea e escreva. O texto fica salvo no seu navegador.</div>
+
+  <div class="card rules">
+    <h2>📋 Regras reais da prova (item 12 do edital)</h2>
+    <p>O tema <b>não é divulgado antes</b> — sai no dia, com um ou mais textos de apoio. O que já está definido:</p>
+    <div class="grid">
+      <div class="g"><b>Tipologia</b>Dissertação (argumentativa). Narrar, descrever ou poema = zero.</div>
+      <div class="g"><b>Tamanho</b>15 a 25 linhas. Menos de 15 ou mais de 25 = zero.</div>
+      <div class="g"><b>Peso</b>50 pontos. Mínimo 25 para aprovar.</div>
+      <div class="g"><b>Caneta</b>Azul ou preta. Lápis/outra cor = zero.</div>
+    </div>
+    <h3>Os 5 critérios de correção</h3>
+    <ul>
+      <li>a) atendimento ao tema proposto;</li>
+      <li>b) clareza de argumentação / senso crítico;</li>
+      <li>c) seletividade de informação (usar o que importa);</li>
+      <li>d) criatividade / originalidade;</li>
+      <li>e) uso da norma culta (nova regra ortográfica).</li>
+    </ul>
+    <div class="danger"><b>Zera (e elimina):</b> fugir do tema, mudar a tipologia, desorganização grave, menos de 15/mais de 25 linhas, deixar em branco, letra ilegível ou <b>se identificar</b> (nome, número, símbolo) no texto.</div>
+  </div>
+
+  <div class="card">
+    <h2>Escolha um tema para treinar</h2>
+    <p class="lead" style="margin-bottom:14px">São temas prováveis, montados a partir do conteúdo do cargo (eficiência, ética, transparência, LGPD, cidadania). A própria banca usa textos curtos de apoio como os daqui.</p>
+    <div id="themeList"></div>
+  </div>
+  <div class="foot">Dica: escreva no campo do tema e clique em <b>Salvar</b>. Abra este arquivo baixado no navegador (não pela prévia online) para o salvamento funcionar.</div>
+</div>
+
+<!-- ===================== EDITOR ===================== -->
+<div id="editor">
+  <button class="backbtn" id="backBtn">‹ Voltar aos temas</button>
+  <div class="kicker" id="edKicker">Tema 1</div>
+  <h1 id="edTitle"></h1>
+
+  <div class="card comando">
+    <h2>📝 Comando da prova</h2>
+    <p id="edComando"></p>
+  </div>
+
+  <div class="card">
+    <h2>📚 Textos de apoio (coletânea)</h2>
+    <div id="edColetanea"></div>
+  </div>
+
+  <details>
+    <summary>🧱 Estrutura sugerida (clique para abrir)</summary>
+    <div class="body model" id="edEstrutura"></div>
+  </details>
+
+  <details>
+    <summary>💡 Repertório: argumentos, leis e dados para usar</summary>
+    <div class="body" id="edRepertorio"></div>
+  </details>
+
+  <div class="card">
+    <h2>✍️ Sua redação</h2>
+    <div class="writebar">
+      <div class="counters">
+        <span class="chip" id="cLinhas">~0 linhas</span>
+        <span class="chip" id="cPalavras">0 palavras</span>
+        <span class="chip" id="cTempo">00:00</span>
+      </div>
+    </div>
+    <textarea id="ta" placeholder="Comece pela tese (sua opinião sobre o tema). Depois 2 parágrafos de argumentos e uma conclusão com proposta. Lembre: 15 a 25 linhas, sem se identificar."></textarea>
+    <div class="savednote" id="savedNote"></div>
+    <div class="toolbar">
+      <button class="pri" id="saveBtn">💾 Salvar</button>
+      <button id="printBtn">🖨️ Imprimir / PDF</button>
+      <button class="danger-btn" id="clearBtn">Limpar texto</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✅ Autoavaliação (os 5 critérios do edital)</h2>
+    <div class="check" id="checklist"></div>
+  </div>
+
+  <div class="foot">Conte as linhas pela <b>estimativa</b> (baseada em ~80 caracteres por linha da folha oficial). No dia, o que vale é a folha de verdade — treine para caber em 15-25 linhas.</div>
+</div>
+
+<script>
+/* ===================== DADOS ===================== */
+const TEMAS = [
+{
+  titulo:'Eficiência e ética no serviço público',
+  resumo:'O servidor além do cumprimento mecânico de tarefas.',
+  comando:'A partir dos textos de apoio, redija uma dissertação argumentativa, em até 25 linhas, posicionando-se sobre o seguinte tema: <b>“A eficiência no serviço público vai além da rapidez: o papel da ética e da qualidade no atendimento ao cidadão.”</b> Apresente argumentos que sustentem seu ponto de vista.',
+  coletanea:[
+    {t:'A administração pública moderna exige do servidor mais do que o cumprimento mecânico de tarefas. Espera-se que ele compreenda o sentido do serviço que presta e enxergue, em cada cidadão atendido, o destinatário final de seu trabalho.', s:'Texto I (adaptado)'},
+    {t:'A eficiência, elevada a princípio constitucional pela Emenda nº 19/1998, não se mede apenas pela rapidez, mas pela qualidade e pela ética com que a função é exercida.', s:'Texto II (adaptado)'}
+  ],
+  repertorio:[
+    'Princípio da eficiência: art. 37, caput, da CF/88 (LIMPE — Legalidade, Impessoalidade, Moralidade, Publicidade, Eficiência).',
+    'Eficiência ≠ pressa: é fazer bem, com economia de recursos e foco no resultado para o cidadão.',
+    'Contraponto à burocracia que existe só para si mesma (carimbo pelo carimbo).',
+    'Dado/exemplo: digitalização de serviços (gov.br, processos eletrônicos) que reduzem filas mantendo a qualidade.',
+    'Ética: impessoalidade no atendimento (tratar todos igualmente, sem favorecimento).'
+  ],
+  estrutura:'<p><em>Introdução (3-4 linhas):</em> apresente o tema e sua tese — ex.: a eficiência só é verdadeira quando une rapidez, qualidade e ética.</p><p><em>Desenvolvimento 1 (5-7 linhas):</em> argumente que rapidez sem qualidade gera retrabalho e prejudica o cidadão. Use o princípio da eficiência (art. 37).</p><p><em>Desenvolvimento 2 (5-7 linhas):</em> mostre o papel da ética e da impessoalidade — o serviço é para o cidadão, não para o servidor. Cite um exemplo (digitalização, atendimento humanizado).</p><p><em>Conclusão (3-4 linhas):</em> retome a tese e proponha algo (capacitação, avaliação de desempenho, foco no usuário).</p>'
+},
+{
+  titulo:'Transparência e controle social',
+  resumo:'Acesso à informação como direito do cidadão.',
+  comando:'Com base nos textos, escreva uma dissertação argumentativa, em até 25 linhas, sobre: <b>“Transparência na administração pública: instrumento de confiança e de controle social.”</b> Defenda seu ponto de vista com argumentos.',
+  coletanea:[
+    {t:'Transparência é um dever da administração pública e um direito do cidadão. Quando os atos do governo são acessíveis e compreensíveis, fortalece-se a confiança da sociedade nas instituições.', s:'Texto I (adaptado)'},
+    {t:'O sigilo, por sua vez, deve ser sempre excepcional e devidamente justificado, jamais a regra.', s:'Texto II (adaptado)'}
+  ],
+  repertorio:[
+    'Princípio da publicidade: art. 37, caput, CF/88 — a regra é a divulgação dos atos.',
+    'Lei de Acesso à Informação (Lei 12.527/2011): acesso é a regra, sigilo é exceção; resposta em 20 dias (+10).',
+    'Controle social: o cidadão fiscaliza o uso do dinheiro público (Portal da Transparência).',
+    'Transparência ativa (o órgão divulga sozinho) x passiva (responde a pedidos).',
+    'Liga-se ao combate à corrupção e à improbidade (Lei 8.429/1992).'
+  ],
+  estrutura:'<p><em>Introdução:</em> defina transparência como dever do Estado e direito do cidadão; tese: ela sustenta a confiança e o controle social.</p><p><em>Desenvolvimento 1:</em> publicidade (art. 37) e a LAI — acesso é a regra. Mostre como isso combate desvios.</p><p><em>Desenvolvimento 2:</em> controle social — cidadão fiscalizando gastos; exemplo do Portal da Transparência.</p><p><em>Conclusão:</em> retome e proponha (educação para a cidadania, sigilo só quando justificado).</p>'
+},
+{
+  titulo:'Atendimento de qualidade ao cidadão',
+  resumo:'O cidadão como centro do serviço público.',
+  comando:'A partir da coletânea, produza uma dissertação argumentativa, em até 25 linhas, sobre: <b>“A qualidade no atendimento ao público como medida de respeito ao cidadão.”</b>',
+  coletanea:[
+    {t:'O servidor público exerce função que pertence à sociedade, não a si mesmo. Cada cidadão que procura um serviço espera ser tratado com cortesia, clareza e igualdade.', s:'Texto I (adaptado)'},
+    {t:'A Lei nº 13.460/2017 estabeleceu direitos do usuário dos serviços públicos, prevendo atendimento com presunção de boa-fé, igualdade e qualidade.', s:'Texto II (adaptado)'}
+  ],
+  repertorio:[
+    'Lei 13.460/2017 (Código de Defesa do Usuário): direitos, Carta de Serviços, ouvidoria, manifestações (reclamação, denúncia, sugestão, elogio, solicitação).',
+    'Princípio da impessoalidade: tratar todos igualmente, sem furar fila por indicação.',
+    'Boa comunicação: linguagem simples, sem "juridiquês", paciência no atendimento (inclusive telefônico).',
+    'Acessibilidade e atendimento prioritário (idosos, PcD).',
+    'Atendimento ruim gera retrabalho, retorno do cidadão e descrédito do serviço público.'
+  ],
+  estrutura:'<p><em>Introdução:</em> o serviço público existe para o cidadão; tese: a qualidade do atendimento é uma forma de respeito e um dever legal.</p><p><em>Desenvolvimento 1:</em> a Lei 13.460/2017 e os direitos do usuário; cite a Carta de Serviços e a ouvidoria.</p><p><em>Desenvolvimento 2:</em> postura profissional — cortesia, clareza, impessoalidade; o que um mau atendimento causa.</p><p><em>Conclusão:</em> proponha (capacitação, canais de ouvidoria, linguagem cidadã).</p>'
+},
+{
+  titulo:'Proteção de dados (LGPD) na administração pública',
+  resumo:'Privacidade do cidadão na era digital.',
+  comando:'Com base nos textos, redija uma dissertação argumentativa, em até 25 linhas, sobre: <b>“A proteção de dados pessoais como dever do poder público na era digital.”</b>',
+  coletanea:[
+    {t:'A digitalização dos serviços públicos trouxe agilidade, mas também ampliou a quantidade de dados pessoais sob a guarda do Estado, exigindo responsabilidade no seu tratamento.', s:'Texto I (adaptado)'},
+    {t:'A Lei Geral de Proteção de Dados (Lei nº 13.709/2018) aplica-se também aos órgãos públicos, que devem tratar os dados do cidadão com finalidade, necessidade e segurança.', s:'Texto II (adaptado)'}
+  ],
+  repertorio:[
+    'LGPD (Lei 13.709/2018): aplica-se a órgãos públicos e privados, inclusive em meio digital.',
+    'Princípios (art. 6º): finalidade, necessidade, transparência, segurança, prevenção, não discriminação.',
+    'Dados sensíveis (saúde, religião, raça, opinião política): proteção reforçada, risco de discriminação.',
+    'Agentes: controlador (decide), operador (executa), titular (cidadão), encarregado/DPO. Fiscaliza: ANPD.',
+    'Equilíbrio: transparência (LAI) x privacidade (LGPD) — publicidade não significa expor dados pessoais.'
+  ],
+  estrutura:'<p><em>Introdução:</em> a era digital aumentou os dados sob guarda do Estado; tese: protegê-los é dever do poder público.</p><p><em>Desenvolvimento 1:</em> a LGPD se aplica ao setor público; princípios da finalidade, necessidade e segurança.</p><p><em>Desenvolvimento 2:</em> riscos do mau uso (vazamentos, discriminação com dados sensíveis); papel do servidor e da ANPD.</p><p><em>Conclusão:</em> proponha (capacitação dos servidores, segurança da informação, equilíbrio entre transparência e privacidade).</p>'
+},
+{
+  titulo:'Combate à corrupção e à improbidade',
+  resumo:'Ética e responsabilidade no uso do dinheiro público.',
+  comando:'A partir da coletânea, escreva uma dissertação argumentativa, em até 25 linhas, sobre: <b>“A probidade administrativa como pilar da confiança no serviço público.”</b>',
+  coletanea:[
+    {t:'Cada decisão tomada no exercício do cargo público deve orientar-se pela legalidade e pelo interesse coletivo. Agir de outro modo é trair a confiança do cidadão, que sustenta, com seus tributos, toda a máquina pública.', s:'Texto I (adaptado)'},
+    {t:'A Lei nº 8.429/1992 define como atos de improbidade o enriquecimento ilícito, o prejuízo ao erário e a violação de princípios da administração.', s:'Texto II (adaptado)'}
+  ],
+  repertorio:[
+    'Lei 8.429/1992: três espécies de improbidade (enriquecimento ilícito, prejuízo ao erário, atentado a princípios).',
+    'Após a Lei 14.230/2021, exige-se dolo (intenção).',
+    'Sanções (art. 37, §4º, CF): perda da função, suspensão dos direitos políticos, indisponibilidade de bens, ressarcimento.',
+    'Princípio da moralidade e da impessoalidade (art. 37).',
+    'Prevenção: transparência (LAI), controle interno/externo, ética no uso de recursos e de informações.'
+  ],
+  estrutura:'<p><em>Introdução:</em> o dinheiro público é do cidadão; tese: a probidade é a base da confiança nas instituições.</p><p><em>Desenvolvimento 1:</em> o que é improbidade (Lei 8.429) e suas consequências — moralidade como dever.</p><p><em>Desenvolvimento 2:</em> como prevenir: transparência, controle, ética cotidiana do servidor.</p><p><em>Conclusão:</em> proponha (cultura de integridade, fiscalização, educação ética).</p>'
+},
+{
+  titulo:'Modernização e digitalização dos serviços',
+  resumo:'Tecnologia a serviço do cidadão.',
+  comando:'Com base nos textos, produza uma dissertação argumentativa, em até 25 linhas, sobre: <b>“A modernização dos serviços públicos e o desafio de não deixar ninguém para trás.”</b>',
+  coletanea:[
+    {t:'A informatização dos órgãos públicos reduziu filas, agilizou processos e aproximou o cidadão da administração, que hoje resolve pela internet o que antes exigia horas de espera.', s:'Texto I (adaptado)'},
+    {t:'No entanto, parte da população ainda enfrenta dificuldade de acesso à tecnologia, o que impõe ao poder público o desafio da inclusão digital.', s:'Texto II (adaptado)'}
+  ],
+  repertorio:[
+    'Princípio da eficiência (art. 37): tecnologia reduz custos e tempo.',
+    'Exemplos: gov.br, processo eletrônico, agendamento online, assinatura digital (ICP-Brasil).',
+    'Exclusão digital: idosos e população de baixa renda podem ficar de fora — necessidade de canais presenciais.',
+    'Segurança da informação e LGPD caminham junto com a digitalização.',
+    'Equilíbrio: modernizar sem excluir; tecnologia como meio, não como barreira.'
+  ],
+  estrutura:'<p><em>Introdução:</em> a digitalização transformou o serviço público; tese: é avanço, mas exige inclusão.</p><p><em>Desenvolvimento 1:</em> benefícios (eficiência, menos filas, exemplos como gov.br e assinatura digital).</p><p><em>Desenvolvimento 2:</em> o risco da exclusão digital; o dever de manter acesso a quem não tem tecnologia.</p><p><em>Conclusão:</em> proponha (capacitação, pontos de atendimento presencial, inclusão digital).</p>'
+}
+];
+
+const CRITERIOS = [
+  'Atendi exatamente ao tema proposto (não fugi nem fiquei genérico).',
+  'Defendi uma tese clara e a sustentei com argumentos (senso crítico).',
+  'Usei só informação relevante, sem encher linguiça (seletividade).',
+  'Trouxe algo próprio — exemplo, dado ou abordagem (criatividade).',
+  'Revisei a norma culta: ortografia, crase, concordância e pontuação.',
+  'Fiquei entre 15 e 25 linhas, na tipologia dissertação, SEM me identificar.'
+];
+
+/* ===================== ESTADO / STORAGE ===================== */
+const SKEY='cambeRedacaoV1';
+let canPersist=true;
+try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }catch(e){ canPersist=false; }
+function loadAll(){ try{ return JSON.parse(localStorage.getItem(SKEY)||'{}'); }catch(e){ return {}; } }
+function saveAll(o){ try{ localStorage.setItem(SKEY, JSON.stringify(o)); }catch(e){ canPersist=false; } }
+function getSaved(i){ return loadAll()['t'+i]||null; }
+
+const $=id=>document.getElementById(id);
+let cur=0, timerInt=null, startTime=0;
+const CHARS_PER_LINE=80; // estimativa da folha oficial
+
+/* ===================== HOME ===================== */
+function buildHome(){
+  const list=$('themeList'); list.innerHTML='';
+  TEMAS.forEach((t,i)=>{
+    const saved=getSaved(i);
+    const b=document.createElement('button'); b.className='theme';
+    b.innerHTML='<span class="num">'+(i+1)+'</span>'+
+      '<span class="tt"><b>'+t.titulo+'</b><span>'+t.resumo+'</span></span>'+
+      (saved&&saved.text&&saved.text.trim()?'<span class="done">✓ rascunho</span>':'')+
+      '<span class="go">›</span>';
+    b.onclick=()=>openTema(i);
+    list.appendChild(b);
+  });
+}
+
+/* ===================== EDITOR ===================== */
+function openTema(i){
+  cur=i; const t=TEMAS[i];
+  $('home').style.display='none'; $('editor').style.display='block';
+  $('edKicker').textContent='Tema '+(i+1)+' · Prova Discursiva';
+  $('edTitle').textContent=t.titulo;
+  $('edComando').innerHTML=t.comando;
+  $('edColetanea').innerHTML=t.coletanea.map(c=>'<div class="coletanea">“'+c.t+'”<span class="src">— '+c.s+'</span></div>').join('');
+  $('edEstrutura').innerHTML=t.estrutura;
+  $('edRepertorio').innerHTML='<ul>'+t.repertorio.map(r=>'<li>'+r+'</li>').join('')+'</ul>';
+  // checklist
+  const cl=$('checklist'); cl.innerHTML='';
+  const saved=getSaved(i);
+  CRITERIOS.forEach((c,idx)=>{
+    const checked = saved&&saved.checks&&saved.checks[idx] ? 'checked':'';
+    const lb=document.createElement('label');
+    lb.innerHTML='<input type="checkbox" data-idx="'+idx+'" '+checked+'><span>'+c+'</span>';
+    cl.appendChild(lb);
+  });
+  cl.querySelectorAll('input').forEach(inp=>inp.onchange=save);
+  // texto salvo
+  $('ta').value = saved&&saved.text ? saved.text : '';
+  updateCounters();
+  startTime=Date.now() - ((saved&&saved.elapsed)||0)*1000;
+  clearInterval(timerInt);
+  timerInt=setInterval(()=>{ const s=Math.floor((Date.now()-startTime)/1000);
+    $('cTempo').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); },1000);
+  window.scrollTo(0,0);
+}
+
+function estLinhas(txt){
+  if(!txt.trim()) return 0;
+  // soma, por parágrafo, o nº de linhas que ocupariam ~80 caracteres na folha oficial
+  return txt.split(/\n/).reduce((acc,par)=>{
+    const len=par.trim().length;
+    return acc + (len===0 ? 1 : Math.ceil(len/CHARS_PER_LINE));
+  },0);
+}
+function updateCounters(){
+  const txt=$('ta').value;
+  const linhas=estLinhas(txt);
+  const palavras=(txt.trim().match(/\S+/g)||[]).length;
+  const cl=$('cLinhas');
+  cl.textContent='~'+linhas+' linhas';
+  cl.className='chip '+(linhas>=15&&linhas<=25?'ok':(linhas===0?'':'bad'));
+  $('cPalavras').textContent=palavras+' palavras';
+}
+
+let savedT=null;
+function flashSaved(msg){ const n=$('savedNote'); n.textContent=msg||'✓ salvo'; n.style.opacity='1';
+  clearTimeout(savedT); savedT=setTimeout(()=>n.style.opacity='0',1500); }
+function save(){
+  if(!canPersist){ flashSaved('⚠ salvamento indisponível neste modo'); return; }
+  const a=loadAll();
+  const checks=[...$('checklist').querySelectorAll('input')].map(x=>x.checked);
+  a['t'+cur]={text:$('ta').value, checks, elapsed:Math.floor((Date.now()-startTime)/1000), savedAt:Date.now()};
+  saveAll(a); flashSaved('✓ salvo automaticamente');
+}
+
+let autosaveT=null;
+$('ta').addEventListener('input',()=>{ updateCounters(); clearTimeout(autosaveT); autosaveT=setTimeout(save,1200); });
+$('saveBtn').onclick=save;
+$('clearBtn').onclick=()=>{ if(confirm('Apagar o texto deste tema?')){ $('ta').value=''; updateCounters(); save(); } };
+$('printBtn').onclick=()=>window.print();
+$('backBtn').onclick=()=>{ save(); clearInterval(timerInt); $('editor').style.display='none'; $('home').style.display='block'; buildHome(); window.scrollTo(0,0); };
+
+if(!canPersist){
+  const f=document.querySelector('#home .foot');
+  if(f) f.innerHTML='⚠ O salvamento não funciona nesta visualização. Baixe o arquivo e abra direto no navegador (Chrome/Safari) para salvar seus textos.';
+}
+buildHome();
+</script>
+</body>
+</html>
