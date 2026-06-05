@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulados — Assistente Administrativo III · Cambé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Spline+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f1e7; --paper:#fffdf8; --ink:#2a2418; --muted:#8a7f6a;
+    --line:#e4dcc9; --accent:#c8761b; --accent-soft:#f5e4cc;
+    --green:#2f8f5b; --green-soft:#dcf0e3; --red:#c0392b; --red-soft:#f6e0dc;
+    --shadow:0 2px 14px rgba(80,60,20,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    background:var(--bg); color:var(--ink); font-family:'Spline Sans',sans-serif;
+    line-height:1.55; padding:18px 16px 60px; max-width:760px; margin:0 auto; min-height:100vh;
+  }
+  .kicker{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:1.8rem;line-height:1.05;margin:6px 0 4px;}
+  .lead{color:var(--muted);font-size:.9rem;margin-bottom:22px;}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);}
+
+  /* START */
+  #start .pick{padding:20px;margin-bottom:14px;}
+  #start h2{font-family:'Fraunces',serif;font-size:1.1rem;margin-bottom:10px;}
+  .sim-btns{display:grid;gap:10px;}
+  .sim{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--paper);
+    cursor:pointer;transition:.16s;text-align:left;width:100%;font-family:inherit;}
+  .sim:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow);}
+  .sim .dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;flex:0 0 auto;}
+  .sim .meta{flex:1;}
+  .sim .meta b{font-size:1rem;font-weight:600;}
+  .sim .meta span{display:block;color:var(--muted);font-size:.8rem;}
+  .sim .go{color:var(--accent);font-weight:700;font-size:1.2rem;}
+  .mode{display:flex;gap:8px;margin-top:14px;}
+  .mode button{flex:1;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--paper);
+    cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:600;color:var(--muted);transition:.15s;}
+  .mode button.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .modehint{font-size:.74rem;color:var(--muted);margin-top:8px;line-height:1.5;}
+
+  /* QUIZ */
+  #quiz{display:none;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;}
+  .topbar .qmeta{font-size:.78rem;color:var(--muted);font-weight:600;}
+  .topbar .sectag{background:var(--accent-soft);color:var(--accent);padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:700;}
+  .progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:6px;}
+  .progress i{display:block;height:100%;background:var(--accent);width:0;transition:.3s;}
+  .menubtn{background:var(--paper);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-weight:700;font-size:.8rem;padding:7px 12px;border-radius:10px;cursor:pointer;flex:0 0 auto;}
+  .menubtn:active{transform:scale(.95);}
+  .savedrow{height:16px;margin-bottom:12px;text-align:right;}
+  .savedrow span{font-size:.72rem;color:var(--green);font-weight:700;opacity:0;transition:opacity .4s;}
+  .resetlink{background:none;border:none;color:var(--muted);font-family:inherit;font-size:.76rem;text-decoration:underline;cursor:pointer;margin-top:-4px;padding:2px 6px;justify-self:start;}
+  .persistwarn{font-size:.76rem;color:#9a5a13;background:var(--accent-soft);border-radius:10px;padding:10px 12px;margin-top:6px;line-height:1.5;}
+
+  .qcard{padding:20px 18px;margin-bottom:16px;}
+  .passage{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:8px;
+    padding:12px 14px;font-style:italic;color:#5c5236;font-size:.9rem;margin-bottom:16px;}
+  .qnum{font-family:'Fraunces',serif;color:var(--accent);font-weight:700;font-size:.95rem;margin-bottom:4px;}
+  .qtext{font-size:1.05rem;font-weight:500;margin-bottom:16px;}
+  .opts{display:grid;gap:9px;}
+  .opt{display:flex;gap:11px;align-items:flex-start;padding:13px 14px;border:1px solid var(--line);
+    border-radius:12px;background:var(--paper);cursor:pointer;transition:.13s;font-family:inherit;
+    font-size:.95rem;text-align:left;width:100%;color:var(--ink);line-height:1.45;}
+  .opt:hover{border-color:var(--accent);}
+  .opt .lt{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);display:grid;
+    place-items:center;font-weight:700;font-size:.82rem;flex:0 0 auto;color:var(--muted);transition:.13s;}
+  .opt.sel{border-color:var(--accent);background:var(--accent-soft);}
+  .opt.sel .lt{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .opt.correct{border-color:var(--green);background:var(--green-soft);}
+  .opt.correct .lt{background:var(--green);color:#fff;border-color:var(--green);}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft);}
+  .opt.wrong .lt{background:var(--red);color:#fff;border-color:var(--red);}
+  .opt.locked{cursor:default;}
+
+  .explain{margin-top:14px;padding:13px 14px;border-radius:12px;font-size:.9rem;display:none;line-height:1.5;}
+  .explain.ok{background:var(--green-soft);color:#1f5e3c;}
+  .explain.no{background:var(--red-soft);color:#7a261c;}
+  .explain b{font-weight:700;}
+
+  .nav{display:flex;gap:10px;align-items:center;}
+  .nav button{flex:1;padding:14px;border-radius:13px;border:1px solid var(--line);background:var(--paper);
+    font-family:inherit;font-weight:700;font-size:.92rem;cursor:pointer;color:var(--ink);transition:.15s;}
+  .nav button.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .nav button:disabled{opacity:.4;cursor:default;}
+  .finish{width:100%;margin-top:10px;padding:14px;border-radius:13px;border:none;background:var(--ink);
+    color:#fff;font-family:inherit;font-weight:700;cursor:pointer;font-size:.92rem;}
+
+  .palette{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+  .pchip{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--paper);
+    font-size:.74rem;font-weight:700;cursor:pointer;color:var(--muted);}
+  .pchip.answered{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+  .pchip.cur{outline:2px solid var(--ink);}
+
+  /* RESULT */
+  #result{display:none;}
+  .scorebox{padding:26px 20px;text-align:center;margin-bottom:16px;}
+  .scorebig{font-family:'Fraunces',serif;font-size:3.2rem;font-weight:700;line-height:1;}
+  .scorebig small{font-size:1.2rem;color:var(--muted);}
+  .verdict{display:inline-block;margin-top:10px;padding:6px 16px;border-radius:999px;font-weight:700;font-size:.86rem;}
+  .verdict.pass{background:var(--green-soft);color:var(--green);}
+  .verdict.fail{background:var(--red-soft);color:var(--red);}
+  .breakdown{padding:18px;margin-bottom:16px;}
+  .breakdown h3{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:12px;}
+  .brow{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .brow .bl{width:140px;font-size:.84rem;font-weight:600;flex:0 0 auto;}
+  .bbar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden;}
+  .bbar i{display:block;height:100%;border-radius:99px;}
+  .brow .bv{font-size:.8rem;font-weight:700;width:46px;text-align:right;}
+  .review{padding:18px;}
+  .review h3{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:6px;}
+  .review p.sub{font-size:.8rem;color:var(--muted);margin-bottom:12px;}
+  .ritem{border-top:1px solid var(--line);padding:12px 0;font-size:.88rem;}
+  .ritem b{color:var(--accent);}
+  .ritem .ra{color:var(--green);font-weight:600;}
+  .actions{display:flex;gap:10px;margin-top:18px;}
+  .actions button{flex:1;padding:14px;border-radius:13px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .actions .again{background:var(--accent);color:#fff;border:none;}
+  .actions .home{background:var(--paper);color:var(--ink);border:1px solid var(--line);}
+  .foot{font-size:.72rem;color:var(--muted);text-align:center;margin-top:24px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<!-- START -->
+<div id="start">
+  <div class="kicker">Concurso Cambé 001/2026 · UniFil</div>
+  <h1>Simulados — Assistente Administrativo III</h1>
+  <div class="lead">Escolha um simulado, responda e veja sua nota por matéria. As alternativas são embaralhadas a cada tentativa.</div>
+
+  <div class="card pick">
+    <h2>Escolha o simulado</h2>
+    <div class="sim-btns" id="simBtns"></div>
+    <div class="mode" id="modeBtns">
+      <button data-mode="train" class="on">Corrigir na hora</button>
+      <button data-mode="exam">Corrigir só no final</button>
+    </div>
+    <div class="modehint" id="modeHint">Modo treino: ao responder, mostra na hora se acertou e a explicação. Bom pra aprender.</div>
+  </div>
+  <div class="foot">60 questões por simulado · 15 Português · 5 Matemática · 5 Informática · 35 Conhecimentos Específicos.<br>Leis federais com conteúdo exato; itens de Estatuto/Lei Orgânica de Cambé devem ser conferidos no texto oficial.</div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz">
+  <div class="topbar">
+    <button class="menubtn" id="menuBtn">‹ Menu</button>
+    <span class="qmeta" id="qCounter">1 / 60</span>
+    <span class="sectag" id="qSec">Português</span>
+    <span class="qmeta" id="timer">00:00</span>
+  </div>
+  <div class="progress"><i id="progBar"></i></div>
+  <div class="savedrow"><span id="savedNote"></span></div>
+  <div class="card qcard">
+    <div id="passageBox"></div>
+    <div class="qnum" id="qNum">Questão 1</div>
+    <div class="qtext" id="qText"></div>
+    <div class="opts" id="opts"></div>
+    <div class="explain" id="explain"></div>
+  </div>
+  <div class="nav">
+    <button id="prevBtn">← Anterior</button>
+    <button id="nextBtn" class="primary">Próxima →</button>
+  </div>
+  <button class="finish" id="finishBtn">Finalizar e ver resultado</button>
+  <div class="palette" id="palette"></div>
+</div>
+
+<!-- RESULT -->
+<div id="result">
+  <div class="kicker">Resultado</div>
+  <h1 id="resTitle">Simulado 1</h1>
+  <div class="card scorebox">
+    <div class="scorebig"><span id="scoreNum">0</span><small>/60</small></div>
+    <div id="verdict" class="verdict"></div>
+    <div style="font-size:.84rem;color:var(--muted);margin-top:10px;" id="timeSpent"></div>
+  </div>
+  <div class="card breakdown">
+    <h3>Desempenho por matéria</h3>
+    <div id="bdRows"></div>
+  </div>
+  <div class="card review">
+    <h3>Revisão dos erros</h3>
+    <p class="sub" id="reviewSub"></p>
+    <div id="reviewList"></div>
+  </div>
+  <div class="actions">
+    <button class="again" id="againBtn">Refazer este</button>
+    <button class="home" id="homeBtn">Escolher outro</button>
+  </div>
+  <div class="foot">Meta de aprovação simulada: 30+ acertos e nenhuma matéria zerada.</div>
+</div>
+
+<script>
+/* ====== DADOS ====== */
+const SEC = {PT:'Português', MAT:'Matemática', INF:'Informática', ESP:'Conhec. Específicos'};
+const P1='A administração pública moderna exige do servidor mais do que o cumprimento mecânico de tarefas. Espera-se que ele compreenda o sentido do serviço que presta e enxergue, em cada cidadão atendido, o destinatário final de seu trabalho. A eficiência, elevada a princípio constitucional, não se mede apenas pela rapidez, mas pela qualidade e pela ética com que a função é exercida.';
+const P2='Transparência é um dever da administração pública e um direito do cidadão. Quando os atos do governo são acessíveis e compreensíveis, fortalece-se a confiança da sociedade nas instituições. O sigilo, por sua vez, deve ser sempre excepcional e devidamente justificado, jamais a regra.';
+const P3='O servidor público exerce função que pertence à sociedade, não a si mesmo. Cada decisão tomada no exercício do cargo deve orientar-se pela legalidade e pelo interesse coletivo. Agir de outro modo é trair a confiança depositada pelo cidadão, que sustenta, com seus tributos, toda a máquina pública.';
+
+const SIMS=[
+{title:'Simulado 1', q:[
+{s:'PT',p:P1,t:'A ideia central do texto é que:',o:['o servidor deve cumprir tarefas com a maior rapidez possível.','a eficiência no serviço público se resume ao cumprimento de prazos.','a eficiência abrange qualidade e ética, e não apenas rapidez.','o cidadão é um obstáculo ao trabalho do servidor.','o trabalho mecânico é o ideal na administração moderna.'],c:2,e:'O texto diz que a eficiência se mede por qualidade e ética, não só rapidez.'},
+{s:'PT',p:P1,t:'A expressão "o destinatário final de seu trabalho" refere-se:',o:['ao próprio servidor.','ao órgão público.','ao cidadão atendido.','à tarefa executada.','ao princípio da eficiência.'],c:2,e:'O destinatário final do trabalho do servidor é o cidadão.'},
+{s:'PT',p:P1,t:'Em "A eficiência, elevada a princípio constitucional", a eficiência é princípio previsto:',o:['no art. 5º da Constituição.','no art. 37 da Constituição (caput).','apenas em lei municipal.','no Código Civil.','na Lei de Licitações.'],c:1,e:'A eficiência é princípio do art. 37, caput, da CF/88 (LIMPE).'},
+{s:'PT',p:P1,t:'Em "não se mede apenas pela rapidez, mas pela qualidade", a conjunção "mas" exprime:',o:['conclusão.','adição.','oposição/contraste.','causa.','finalidade.'],c:2,e:'"Mas" é conjunção adversativa: indica oposição/contraste.'},
+{s:'PT',t:'Assinale a alternativa em que a crase foi empregada CORRETAMENTE:',o:['Entreguei o documento à secretária.','Refiro-me à você.','Cheguei à pé na repartição.','Trabalho de à tarde.','Vou à qualquer reunião.'],c:0,e:'"À secretária" (a+a). Não há crase antes de "você", "pé" (locução) nem "qualquer".'},
+{s:'PT',t:'Assinale a frase com ERRO de concordância verbal:',o:['Fazem dois anos que ele tomou posse.','Houve muitos candidatos inscritos.','Os servidores chegaram cedo.','Existem vários cargos vagos.','A maioria dos servidores compareceu.'],c:0,e:'"Fazer" indicando tempo é impessoal: o correto é "Faz dois anos".'},
+{s:'PT',t:'Em "Os documentos foram arquivados pelo servidor", a oração está na voz:',o:['ativa.','passiva analítica.','reflexiva.','passiva sintética.','recíproca.'],c:1,e:'"Foram arquivados" = ser + particípio = voz passiva analítica.'},
+{s:'PT',t:'Assinale a palavra acentuada pela MESMA regra de "público":',o:['café.','você.','lâmpada.','anéis.','saída.'],c:2,e:'"Público" e "lâmpada" são proparoxítonas (todas acentuadas).'},
+{s:'PT',t:'Em "O chefe pediu que todos comparecessem", "comparecessem" é:',o:['substantivo.','verbo no pretérito imperfeito do subjuntivo.','verbo no futuro do presente.','advérbio.','adjetivo.'],c:1,e:'"Comparecessem" está no pretérito imperfeito do subjuntivo.'},
+{s:'PT',t:'Assinale a alternativa em que a vírgula está CORRETAMENTE empregada:',o:['O servidor, que chegou atrasado foi advertido.','Pedro, organize os arquivos, por favor.','Comprou canetas papéis, e grampos.','Ele estudou muito, e passou.','Maria foi, à reunião.'],c:1,e:'As vírgulas isolam corretamente o vocativo "Pedro".'},
+{s:'PT',t:'"Embora estivesse cansado, terminou o relatório." A oração destacada expressa:',o:['condição.','concessão.','finalidade.','tempo.','causa.'],c:1,e:'"Embora" introduz oração concessiva.'},
+{s:'PT',t:'Em qual alternativa todas as palavras estão grafadas CORRETAMENTE?',o:['excessão, previlégio, beneficente.','exceção, privilégio, beneficente.','exceção, previlégio, benificente.','excessão, privilégio, beneficiente.','exceção, privilegio, beneficente.'],c:1,e:'Correto: exceção, privilégio, beneficente.'},
+{s:'PT',t:'O plural de "cidadão" é:',o:['cidadões.','cidadães.','cidadãos.','cidadans.','cidades.'],c:2,e:'O plural de cidadão é cidadãos.'},
+{s:'PT',t:'Em "Ele se referiu aos documentos antigos", "aos documentos antigos" exerce a função de:',o:['sujeito.','objeto direto.','objeto indireto.','adjunto adverbial.','predicativo.'],c:2,e:'"Referir-se a" pede objeto indireto.'},
+{s:'PT',t:'Assinale a colocação pronominal conforme a norma culta:',o:['Me chamaram para a reunião.','Nunca se viu tamanho descaso.','Não vi-o ontem.','Tinha dito-lhe tudo.','Dir-lhe-ei? não.'],c:1,e:'"Nunca se viu" (próclise atraída por "nunca"). Não se inicia frase com pronome átono.'},
+{s:'MAT',t:'Um servidor organizou 1.200 documentos em 8 horas, em ritmo constante. Quantos organizou em 5 horas?',o:['600','700','750','800','900'],c:2,e:'1200÷8 = 150/h; ×5 = 750.'},
+{s:'MAT',t:'Se 30% dos 240 processos são urgentes, quantos NÃO são urgentes?',o:['72','96','144','168','180'],c:3,e:'70% de 240 = 168.'},
+{s:'MAT',t:'O MMC entre 12 e 18 é:',o:['24','36','48','54','72'],c:1,e:'MMC(12,18) = 36.'},
+{s:'MAT',t:'Numa PA de razão 4 e primeiro termo 7, o quinto termo é:',o:['19','21','23','27','31'],c:2,e:'a5 = 7 + 4×4 = 23.'},
+{s:'MAT',t:'Um terreno retangular mede 15 m por 8 m. A área é:',o:['23 m²','46 m²','60 m²','120 m²','150 m²'],c:3,e:'15×8 = 120 m².'},
+{s:'INF',t:'No MS Word em português, o atalho Ctrl + B corresponde a:',o:['aplicar negrito.','salvar o documento.','selecionar tudo.','copiar.','abrir um arquivo.'],c:1,e:'No Word em português, Ctrl+B = Salvar (negrito é Ctrl+N).'},
+{s:'INF',t:'No MS Excel, toda fórmula deve começar com o sinal de:',o:['+','@','#','=','*'],c:3,e:'Toda fórmula no Excel começa com "=".'},
+{s:'INF',t:'A extensão padrão de uma apresentação do PowerPoint é:',o:['.docx','.xlsx','.pptx','.pdf','.txt'],c:2,e:'PowerPoint = .pptx.'},
+{s:'INF',t:'O recurso que monitora e controla o tráfego de rede, bloqueando acessos não autorizados, é o:',o:['antivírus.','firewall.','backup.','phishing.','cookie.'],c:1,e:'O firewall controla o tráfego de entrada e saída da rede.'},
+{s:'INF',t:'A assinatura digital (ICP-Brasil) garante ao documento eletrônico, EXCETO:',o:['autenticidade.','integridade.','não-repúdio.','autoria.','aumento da velocidade da internet.'],c:4,e:'Assinatura digital não tem relação com velocidade de internet.'},
+{s:'ESP',t:'Segundo o art. 37 da CF/88, são princípios expressos da Administração Pública:',o:['legalidade, isonomia, moralidade, publicidade e celeridade.','legalidade, impessoalidade, moralidade, publicidade e eficiência.','legalidade, impessoalidade, motivação, publicidade e economicidade.','legalidade, igualdade, moralidade, proporcionalidade e eficiência.','legalidade, impessoalidade, moralidade, presunção e eficiência.'],c:1,e:'LIMPE: Legalidade, Impessoalidade, Moralidade, Publicidade, Eficiência.'},
+{s:'ESP',t:'O prazo de validade do concurso público (art. 37, CF/88) é de:',o:['até 1 ano, improrrogável.','até 2 anos, prorrogável uma vez por igual período.','até 3 anos, prorrogável duas vezes.','até 4 anos, improrrogável.','até 5 anos, prorrogável.'],c:1,e:'Validade de até 2 anos, prorrogável uma vez por igual período.'},
+{s:'ESP',t:'Conforme o art. 41 da CF/88, a estabilidade é adquirida após:',o:['1 ano de efetivo exercício.','2 anos de efetivo exercício.','3 anos de efetivo exercício.','5 anos de efetivo exercício.','a posse, imediatamente.'],c:2,e:'Estabilidade após 3 anos de efetivo exercício.'},
+{s:'ESP',t:'O servidor estável poderá perder o cargo, EXCETO:',o:['por sentença judicial transitada em julgado.','mediante processo administrativo com ampla defesa.','mediante avaliação periódica de desempenho.','por decisão unilateral e verbal do chefe imediato.','nas hipóteses previstas na Constituição.'],c:3,e:'Não se perde o cargo por decisão verbal; só por sentença, PAD ou avaliação periódica.'},
+{s:'ESP',t:'É vedada a acumulação remunerada de cargos, salvo (com compatibilidade de horários):',o:['dois cargos de qualquer natureza.','dois cargos de professor.','três cargos privativos de saúde.','um cargo de professor com um de motorista.','dois cargos em comissão.'],c:1,e:'Uma das exceções é a acumulação de dois cargos de professor.'},
+{s:'ESP',t:'São entidades da Administração Indireta:',o:['ministérios e secretarias.','autarquias, fundações públicas, empresas públicas e sociedades de economia mista.','apenas as autarquias.','os órgãos da Presidência.','apenas empresas privadas contratadas.'],c:1,e:'A Administração Indireta abrange autarquias, fundações, EP e SEM.'},
+{s:'ESP',t:'A distribuição de competências dentro de uma mesma pessoa jurídica, criando hierarquia interna, chama-se:',o:['descentralização.','desconcentração.','delegação externa.','privatização.','terceirização.'],c:1,e:'Desconcentração: distribuição interna, com hierarquia, na mesma pessoa jurídica.'},
+{s:'ESP',t:'São atributos do ato administrativo:',o:['presunção de legitimidade, imperatividade e autoexecutoriedade.','competência, finalidade e forma.','motivo, objeto e conteúdo.','legalidade, moralidade e eficiência.','discricionariedade, vinculação e revogação.'],c:0,e:'Atributos: presunção de legitimidade, imperatividade e autoexecutoriedade.'},
+{s:'ESP',t:'O poder pelo qual a Administração apura e pune infrações funcionais de servidores é o poder:',o:['regulamentar.','de polícia.','hierárquico.','disciplinar.','vinculado.'],c:3,e:'O poder disciplinar pune infrações funcionais dos servidores.'},
+{s:'ESP',t:'As modalidades de licitação da Lei 14.133/2021 são:',o:['concorrência, tomada de preços, convite, concurso e leilão.','pregão, concorrência, concurso, leilão e diálogo competitivo.','pregão, tomada de preços, convite, leilão e concurso.','concorrência, pregão, convite, consulta e leilão.','pregão, concorrência, tomada de preços, leilão e diálogo competitivo.'],c:1,e:'São cinco: pregão, concorrência, concurso, leilão e diálogo competitivo.'},
+{s:'ESP',t:'Em relação à Lei 8.666/1993, a Lei 14.133/2021:',o:['criou a tomada de preços.','extinguiu as modalidades tomada de preços e convite.','manteve todas as modalidades antigas.','extinguiu o pregão.','criou o convite eletrônico.'],c:1,e:'A 14.133 extinguiu tomada de preços e convite.'},
+{s:'ESP',t:'Na Lei 14.133/2021, o pregão destina-se à aquisição de:',o:['obras de grande vulto.','bens e serviços comuns.','bens e serviços especiais.','serviços técnicos singulares.','alienação de imóveis.'],c:1,e:'Pregão = bens e serviços comuns.'},
+{s:'ESP',t:'A contratação direta por inexigibilidade fundamenta-se em:',o:['baixo valor da contratação.','urgência de atendimento.','inviabilidade de competição.','calamidade pública.','interesse exclusivo do gestor.'],c:2,e:'Inexigibilidade = inviabilidade de competição.'},
+{s:'ESP',t:'Sobre a ordem das fases da licitação (Lei 14.133/2021):',o:['a habilitação ocorre antes do julgamento.','o julgamento, em regra, ocorre antes da habilitação.','a homologação ocorre antes do julgamento.','não há fase recursal.','a divulgação do edital é a última fase.'],c:1,e:'Na 14.133, em regra, julga-se antes de habilitar.'},
+{s:'ESP',t:'Relacione (Lei 8.429): (1) Enriquecimento ilícito (2) Prejuízo ao erário (3) Atentado a princípios — ( ) perda patrimonial ( ) vantagem indevida em razão do cargo ( ) violar deveres de honestidade:',o:['2 – 1 – 3','1 – 2 – 3','3 – 2 – 1','2 – 3 – 1','1 – 3 – 2'],c:0,e:'Perda patrimonial=2, vantagem indevida=1, violar deveres=3 → 2–1–3.'},
+{s:'ESP',t:'Após a Lei 14.230/2021, a improbidade administrativa exige, em regra:',o:['mera culpa (negligência).','dolo (conduta intencional).','apenas o resultado.','responsabilidade objetiva.','prévia condenação penal.'],c:1,e:'Passou a exigir dolo.'},
+{s:'ESP',t:'Na LAI (Lei 12.527/2011), o prazo para responder ao pedido, quando não imediato, é de:',o:['10 dias, sem prorrogação.','20 dias, prorrogável por mais 10 mediante justificativa.','30 dias, improrrogável.','48 horas.','60 dias.'],c:1,e:'20 dias, prorrogável por mais 10.'},
+{s:'ESP',t:'Na Lei de Acesso à Informação, a regra geral é:',o:['o sigilo das informações públicas.','a publicidade, sendo o sigilo a exceção.','o acesso restrito a servidores.','a cobrança obrigatória.','o segredo por 25 anos.'],c:1,e:'Publicidade é a regra; sigilo é a exceção.'},
+{s:'ESP',t:'Conforme a Lei 13.460/2017, são tipos de manifestação do usuário:',o:['somente reclamações.','reclamação, denúncia, sugestão, elogio e solicitação.','apenas elogios e críticas.','petição e mandado.','recurso e contrarrazão.'],c:1,e:'Manifestações: reclamação, denúncia, sugestão, elogio e solicitação.'},
+{s:'ESP',t:'Na LGPD, são exemplos de dados pessoais SENSÍVEIS:',o:['nome e endereço.','telefone e e-mail.','origem racial, convicção religiosa e dado de saúde.','profissão e estado civil.','número de protocolo e matrícula.'],c:2,e:'Sensíveis: origem racial, religião, saúde, opinião política etc.'},
+{s:'ESP',t:'Na LGPD, o agente responsável pelas decisões sobre o tratamento de dados é o:',o:['operador.','encarregado.','controlador.','titular.','fiscal.'],c:2,e:'O controlador toma as decisões sobre o tratamento.'},
+{s:'ESP',t:'O instrumento que estabelece diretrizes, objetivos e metas por quatro anos é:',o:['a LOA.','a LDO.','o PPA.','o balanço geral.','o decreto de execução.'],c:2,e:'O PPA tem vigência de 4 anos.'},
+{s:'ESP',t:'A Lei de Diretrizes Orçamentárias (LDO):',o:['tem vigência de quatro anos.','orienta a elaboração da LOA.','substitui o PPA.','é facultativa.','trata apenas de obras.'],c:1,e:'A LDO orienta a elaboração da LOA.'},
+{s:'ESP',t:'São exemplos de documentos oficiais da redação administrativa:',o:['ofício, memorando, ata, despacho e portaria.','romance, crônica e poema.','contrato de aluguel particular.','bilhete e recado informal.','e-mail pessoal e mensagem instantânea.'],c:0,e:'Documentos oficiais: ofício, memorando, ata, despacho, portaria.'},
+{s:'ESP',t:'No atendimento ao público, a postura adequada inclui:',o:['demonstrar impaciência para agilizar a fila.','tratar o cidadão com cortesia, clareza e imparcialidade.','priorizar amigos e conhecidos.','repassar informações sigilosas a terceiros.','recusar-se a se identificar.'],c:1,e:'Cortesia, clareza e imparcialidade.'},
+{s:'ESP',t:'A independência das instâncias de responsabilidade do servidor significa que:',o:['a punição penal afasta sempre a administrativa.','as responsabilidades civil, penal e administrativa podem ser apuradas de forma independente.','só pode haver uma punição por vez.','a esfera civil exclui a penal.','nada é possível sem condenação penal.'],c:1,e:'As três esferas são independentes entre si.'},
+{s:'ESP',t:'Registrar e numerar um bem permanente, identificando-o no acervo do órgão, é:',o:['liquidação.','empenho.','tombamento.','homologação.','licitação.'],c:2,e:'Tombamento = registro/numeração do bem permanente.'},
+{s:'ESP',t:'(V/F) ( ) O poder de polícia limita direitos individuais em favor do interesse público. ( ) O poder hierárquico permite dar ordens e rever atos de subordinados. ( ) O poder discricionário é absoluto e não admite controle de legalidade.',o:['V – V – F','V – F – V','F – V – F','V – V – V','F – F – V'],c:0,e:'O discricionário NÃO é absoluto e admite controle de legalidade → V, V, F.'},
+{s:'ESP',t:'São requisitos (elementos) de validade do ato administrativo:',o:['competência, finalidade, forma, motivo e objeto.','presunção, imperatividade e autoexecutoriedade.','legalidade, moralidade e publicidade.','eficácia, exequibilidade e validade.','discricionariedade e vinculação.'],c:0,e:'Requisitos: competência, finalidade, forma, motivo e objeto.'},
+{s:'ESP',t:'A revogação de um ato administrativo:',o:['ocorre por ilegalidade.','ocorre por conveniência e oportunidade, sobre ato válido.','tem sempre efeitos retroativos (ex tunc).','só pode ser feita pelo Judiciário.','é vedada em qualquer hipótese.'],c:1,e:'Revogação = conveniência/oportunidade sobre ato válido (efeito ex nunc).'},
+{s:'ESP',t:'A investidura em cargo público depende de concurso, RESSALVADAS:',o:['as nomeações para cargo em comissão de livre nomeação e exoneração.','todas as contratações da administração indireta.','os cargos de professor.','os empregos temporários de saúde.','nenhuma hipótese.'],c:0,e:'Ressalva: cargos em comissão de livre nomeação e exoneração.'},
+{s:'ESP',t:'(V/F) ( ) O leilão serve para alienação de bens pelo maior lance. ( ) O diálogo competitivo é para inovação/complexidade. ( ) O concurso destina-se à aquisição de bens comuns.',o:['V – V – F','V – F – V','F – V – V','V – V – V','F – F – F'],c:0,e:'O concurso NÃO serve para bens comuns → V, V, F.'},
+{s:'ESP',t:'A LGPD aplica-se ao tratamento de dados realizado:',o:['somente por empresas privadas.','somente por órgãos públicos.','por pessoa natural ou jurídica, de direito público ou privado, inclusive em meios digitais.','apenas a dados financeiros.','somente fora do território nacional.'],c:2,e:'Alcança pessoa natural e jurídica, pública ou privada.'},
+{s:'ESP',t:'Na Lei 13.460/2017, o órgão que recebe e trata as manifestações dos usuários é a:',o:['corregedoria.','ouvidoria.','controladoria-geral.','auditoria externa.','procuradoria.'],c:1,e:'A ouvidoria recebe e trata as manifestações.'},
+{s:'ESP',t:'Assinale a alternativa que apresenta apenas formas de PROVIMENTO de cargo:',o:['nomeação, promoção e readaptação.','exoneração, demissão e aposentadoria.','férias, licença e afastamento.','advertência, suspensão e demissão.','posse, exercício e estágio.'],c:0,e:'Provimento: nomeação, promoção, readaptação.'}
+]},
+
+{title:'Simulado 2', q:[
+{s:'PT',p:P2,t:'Segundo o texto, a transparência:',o:['é um favor concedido pelo governo.','é um dever da administração e um direito do cidadão.','deve ser a exceção.','enfraquece a confiança social.','é dispensável nas instituições.'],c:1,e:'Transparência é dever da administração e direito do cidadão.'},
+{s:'PT',p:P2,t:'A expressão "por sua vez" estabelece relação de:',o:['causa.','contraste/alternância.','conclusão.','finalidade.','tempo.'],c:1,e:'"Por sua vez" marca contraste/alternância.'},
+{s:'PT',p:P2,t:'"jamais a regra" reforça que o sigilo deve ser:',o:['permanente.','frequente.','excepcional.','obrigatório.','automático.'],c:2,e:'Reforça que o sigilo é excepcional.'},
+{s:'PT',p:P2,t:'"excepcional" pode ser substituída, sem mudança de sentido, por:',o:['comum.','habitual.','extraordinário/raro.','frequente.','constante.'],c:2,e:'Excepcional = extraordinário/raro.'},
+{s:'PT',t:'Assinale a opção em que NÃO ocorre crase:',o:['Refiro-me à reunião de ontem.','Vou a pé até o trabalho.','Entreguei o ofício à diretora.','Estarei lá às 9h.','Deu-se início à sessão.'],c:1,e:'"A pé" é locução com palavra masculina: sem crase.'},
+{s:'PT',t:'Assinale a frase corretamente pontuada:',o:['O servidor responsável, pelo setor chegou.','Senhores, a reunião começará agora.','Comprou: canetas, papéis grampos.','Ele trabalha, e descansa.','Maria, a chefe; pediu silêncio.'],c:1,e:'Vírgula após o vocativo "Senhores".'},
+{s:'PT',t:'"Precisa-se de servidores qualificados." A oração apresenta:',o:['sujeito determinado.','sujeito indeterminado.','voz passiva analítica.','sujeito oculto.','oração sem verbo.'],c:1,e:'Verbo VTI + "se" = sujeito indeterminado.'},
+{s:'PT',t:'"rápido", "vírus" e "fácil" são acentuadas, respectivamente, por serem:',o:['oxítona, paroxítona, proparoxítona.','proparoxítona, paroxítona, paroxítona.','paroxítona, paroxítona, paroxítona.','proparoxítona, oxítona, paroxítona.','paroxítona, oxítona, proparoxítona.'],c:1,e:'rápido (proparoxítona), vírus (paroxítona), fácil (paroxítona).'},
+{s:'PT',t:'Em "Os relatórios que foram revisados estão prontos", "que foram revisados" é:',o:['oração principal.','oração subordinada adjetiva.','oração coordenada aditiva.','oração substantiva subjetiva.','oração adverbial.'],c:1,e:'É subordinada adjetiva (restringe "relatórios").'},
+{s:'PT',t:'Assinale a concordância nominal CORRETA:',o:['É proibido entrada de estranhos.','É proibida a entrada de estranhos.','Anexo segue as fotos.','As crianças ficaram meias cansadas.','Elas mesmo fizeram o trabalho.'],c:1,e:'Com o artigo "a", o adjetivo concorda: "É proibida a entrada".'},
+{s:'PT',t:'"Estudou tanto que foi aprovado." A oração destacada exprime:',o:['causa.','consequência.','condição.','concessão.','comparação.'],c:1,e:'"Tanto... que" indica consequência.'},
+{s:'PT',t:'Assinale a alternativa em que todas as palavras estão corretas:',o:['concerteza, derrepente, agente (nós).','com certeza, de repente, a gente.','concerteza, de repente, a gente.','com certeza, derrepente, agente.','com certeza, de repente, agente (nós).'],c:1,e:'Correto: com certeza, de repente, a gente.'},
+{s:'PT',t:'O feminino de "cidadão" e o plural de "cônsul" são:',o:['cidadã / cônsules.','cidadoa / cônsuis.','cidadã / cônsules.','cidadona / cônsuls.','cidadinha / cônsulis.'],c:2,e:'cidadã / cônsules.'},
+{s:'PT',t:'Em "Gosto de café", o termo "de café" classifica-se como:',o:['objeto direto.','objeto indireto.','sujeito.','adjunto adnominal.','aposto.'],c:1,e:'"Gostar de" → objeto indireto.'},
+{s:'PT',t:'Assinale a colocação pronominal correta:',o:['Me empresta a caneta?','Não se sabe a verdade.','Tinha falado-lhe ontem.','Far-lhe-ei? não.','Ninguém disse-me nada.'],c:1,e:'"Não se sabe" (próclise pela negação).'},
+{s:'MAT',t:'Se 4 servidores atendem 80 pessoas em 2h, quantas 6 servidores atendem em 2h, no mesmo ritmo?',o:['100','110','120','130','140'],c:2,e:'20 por servidor; 6×20 = 120.'},
+{s:'MAT',t:'Um produto de R$ 200,00 teve aumento de 15%. O novo preço é:',o:['R$ 215,00','R$ 220,00','R$ 230,00','R$ 250,00','R$ 260,00'],c:2,e:'200×1,15 = 230.'},
+{s:'MAT',t:'O MDC entre 24 e 36 é:',o:['6','8','12','18','24'],c:2,e:'MDC(24,36) = 12.'},
+{s:'MAT',t:'Numa sala há 5 homens e 3 mulheres. A probabilidade de escolher uma mulher é:',o:['3/8','5/8','1/3','1/2','3/5'],c:0,e:'3 mulheres em 8 pessoas → 3/8.'},
+{s:'MAT',t:'Quantos números de 2 algarismos distintos podem ser formados com 1, 2, 3 e 4?',o:['8','10','12','14','16'],c:2,e:'4×3 = 12.'},
+{s:'INF',t:'No MS Word em português, o atalho Ctrl + T executa:',o:['salvar.','selecionar tudo.','abrir.','negrito.','imprimir.'],c:1,e:'No Word em português, Ctrl+T = Selecionar Tudo.'},
+{s:'INF',t:'No Excel, a função que soma as células de A1 a A10 é:',o:['=SOMAR(A1;A10)','=SOMA(A1:A10)','=TOTAL(A1-A10)','=ADD(A1:A10)','=SUM10(A1)'],c:1,e:'=SOMA(A1:A10).'},
+{s:'INF',t:'No Windows, o atalho Alt + Tab serve para:',o:['fechar o programa.','alternar entre janelas abertas.','abrir o menu Iniciar.','excluir arquivo.','atualizar a tela.'],c:1,e:'Alt+Tab alterna entre janelas abertas.'},
+{s:'INF',t:'Golpe em que o criminoso se passa por instituição confiável para roubar dados é o:',o:['backup.','phishing.','firewall.','cache.','cookie.'],c:1,e:'Phishing.'},
+{s:'INF',t:'Sobre arquivos e pastas no Windows, é CORRETO:',o:['pastas não podem conter outras pastas.','a extensão .xlsx identifica um arquivo do Excel.','arquivos excluídos vão direto, sem lixeira.','dois arquivos iguais coexistem na mesma pasta.','a extensão não influencia o programa que abre.'],c:1,e:'.xlsx identifica arquivo do Excel.'},
+{s:'ESP',t:'O princípio que exige atuar sem favoritismos, visando ao interesse público, é o da:',o:['legalidade.','impessoalidade.','publicidade.','eficiência.','moralidade.'],c:1,e:'Impessoalidade.'},
+{s:'ESP',t:'Durante o prazo de validade do concurso, o aprovado:',o:['não tem prioridade.','terá prioridade de nomeação sobre novos concursados.','perde o direito após 30 dias.','só é nomeado por indicação política.','deve refazer a prova.'],c:1,e:'Tem prioridade de nomeação no prazo de validade.'},
+{s:'ESP',t:'A função de confiança deve ser exercida:',o:['por qualquer pessoa indicada.','exclusivamente por servidores ocupantes de cargo efetivo.','somente por agentes políticos.','por terceirizados.','por estagiários.'],c:1,e:'Função de confiança: só por ocupantes de cargo efetivo.'},
+{s:'ESP',t:'São fatores comumente avaliados no estágio probatório, EXCETO:',o:['assiduidade.','disciplina.','responsabilidade.','produtividade.','grau de parentesco com o chefe.'],c:4,e:'Parentesco com o chefe não é fator de avaliação.'},
+{s:'ESP',t:'A reintegração é a forma de provimento em que o servidor:',o:['é demitido por justa causa.','retorna ao cargo após invalidação de sua demissão, com ressarcimento.','assume cargo superior por merecimento.','muda de órgão por interesse próprio.','é exonerado a pedido.'],c:1,e:'Reintegração = retorno após invalidação da demissão.'},
+{s:'ESP',t:'A criação de uma autarquia se dá:',o:['por simples portaria.','por lei específica.','por decreto sem lei.','por contrato administrativo.','por decisão do Tribunal de Contas.'],c:1,e:'Autarquia é criada por lei específica.'},
+{s:'ESP',t:'Conceitua corretamente DESCENTRALIZAÇÃO:',o:['distribuição interna de competências em um mesmo órgão.','transferência da execução de serviços a outra pessoa jurídica.','concentração de poderes em uma autoridade.','extinção de uma autarquia.','hierarquia entre chefias.'],c:1,e:'Descentralização = transferência a outra pessoa jurídica.'},
+{s:'ESP',t:'A presunção de legitimidade do ato administrativo significa que:',o:['o ato é sempre ilegal até prova em contrário.','presume-se praticado conforme a lei, até prova em contrário.','o ato não pode ser questionado.','o ato só vale após decisão judicial.','o ato é facultativo.'],c:1,e:'Presume-se legal até prova em contrário.'},
+{s:'ESP',t:'O poder que permite editar normas para fiel execução da lei é o poder:',o:['hierárquico.','disciplinar.','regulamentar.','de polícia.','vinculado.'],c:2,e:'Poder regulamentar.'},
+{s:'ESP',t:'NÃO é critério de julgamento da Lei 14.133/2021:',o:['menor preço.','maior desconto.','técnica e preço.','maior lance.','sorteio aleatório.'],c:4,e:'Sorteio aleatório não é critério de julgamento.'},
+{s:'ESP',t:'A modalidade adequada para alienação de bens móveis inservíveis é:',o:['pregão.','concorrência.','leilão.','concurso.','diálogo competitivo.'],c:2,e:'Alienação de bens = leilão.'},
+{s:'ESP',t:'A dispensa por valor (art. 75), para outros serviços e compras, aplica-se até:',o:['R$ 10.000,00.','R$ 50.000,00 (valor da lei, atualizável).','R$ 100.000,00.','R$ 500.000,00.','qualquer valor.'],c:1,e:'Até R$ 50.000 (valor da lei, atualizável por decreto).'},
+{s:'ESP',t:'A modalidade concorrência é cabível para:',o:['bens e serviços comuns de baixo valor.','bens e serviços especiais e obras e serviços de engenharia.','somente alienação de imóveis.','escolha de trabalho artístico.','inovação tecnológica exclusivamente.'],c:1,e:'Concorrência: bens/serviços especiais e obras/engenharia.'},
+{s:'ESP',t:'(V/F) ( ) Inexigibilidade decorre da inviabilidade de competição. ( ) Dispensa: licitação possível, mas a lei permite não realizá-la. ( ) Fornecedor exclusivo é hipótese de inexigibilidade.',o:['V – V – V','V – F – V','F – V – F','V – V – F','F – F – V'],c:0,e:'Todas verdadeiras → V, V, V.'},
+{s:'ESP',t:'Importar vantagem patrimonial indevida em razão do cargo configura ato de improbidade por:',o:['prejuízo ao erário.','enriquecimento ilícito.','atentado a princípios.','infração disciplinar leve.','mero erro administrativo.'],c:1,e:'Vantagem indevida = enriquecimento ilícito.'},
+{s:'ESP',t:'As sanções por improbidade (art. 37, §4º, CF) incluem:',o:['prisão automática de 5 anos.','suspensão dos direitos políticos, perda da função, indisponibilidade dos bens e ressarcimento.','apenas multa de trânsito.','advertência verbal.','perda de pontos na carteira.'],c:1,e:'Suspensão de direitos políticos, perda da função, indisponibilidade de bens e ressarcimento.'},
+{s:'ESP',t:'Na LAI, são graus de classificação de informações sigilosas:',o:['confidencial, restrita e pública.','ultrassecreta, secreta e reservada.','interna, externa e mista.','urgente, normal e adiada.','leve, média e grave.'],c:1,e:'Ultrassecreta, secreta e reservada.'},
+{s:'ESP',t:'A LAI estabelece que o acesso à informação pública:',o:['deve ser sempre cobrado.','é gratuito como regra, cobrando-se só o custo de reprodução.','é restrito a jornalistas.','depende de autorização judicial.','só é permitido a servidores.'],c:1,e:'Acesso gratuito; cobra-se só o custo de reprodução.'},
+{s:'ESP',t:'O documento que informa serviços, formas de acesso e compromissos de atendimento (Lei 13.460) é a:',o:['ata de reunião.','Carta de Serviços ao Usuário.','portaria interna.','certidão negativa.','folha de pagamento.'],c:1,e:'Carta de Serviços ao Usuário.'},
+{s:'ESP',t:'Na LGPD, o consentimento do titular deve ser:',o:['tácito e presumido.','livre, informado e inequívoco.','dispensável em todos os casos.','dado apenas por terceiros.','irrevogável.'],c:1,e:'Consentimento livre, informado e inequívoco.'},
+{s:'ESP',t:'A autoridade nacional que fiscaliza a LGPD é a:',o:['Receita Federal.','ANPD.','Polícia Federal.','ANS.','Banco Central.'],c:1,e:'ANPD (Autoridade Nacional de Proteção de Dados).'},
+{s:'ESP',t:'A Lei Orçamentária Anual (LOA):',o:['tem vigência de quatro anos.','estima a receita e fixa a despesa para o exercício (um ano).','substitui o PPA e a LDO.','é elaborada apenas pelo Legislativo.','trata só de pessoal.'],c:1,e:'A LOA estima receita e fixa despesa para um ano.'},
+{s:'ESP',t:'Sobre o ciclo orçamentário, é CORRETO:',o:['a LDO orienta a LOA e deve guardar consonância com o PPA.','o PPA tem vigência de um ano.','a LOA é plurianual.','a LDO trata apenas de obras.','o PPA é dispensável.'],c:0,e:'A LDO orienta a LOA e harmoniza-se com o PPA.'},
+{s:'ESP',t:'O documento de comunicação interna, ágil, entre unidades do mesmo órgão é o:',o:['edital.','memorando/comunicação interna.','decreto.','lei.','contrato.'],c:1,e:'Memorando / comunicação interna.'},
+{s:'ESP',t:'No atendimento telefônico em repartição, recomenda-se:',o:['atender de forma ríspida para poupar tempo.','identificar o setor e atender com cordialidade e objetividade.','deixar tocar indefinidamente.','repassar dados sigilosos.','desligar sem registrar a demanda.'],c:1,e:'Identificar o setor e atender com cordialidade e objetividade.'},
+{s:'ESP',t:'A responsabilidade administrativa do servidor é apurada por meio de:',o:['ação penal no Tribunal do Júri.','processo administrativo disciplinar (PAD), com ampla defesa.','decisão exclusiva do prefeito, sem defesa.','sorteio.','ação civil pública obrigatória.'],c:1,e:'Por PAD, com contraditório e ampla defesa.'},
+{s:'ESP',t:'A contagem física dos bens e conferência com os registros do sistema é o:',o:['empenho.','inventário.','liquidação.','homologação.','pregão.'],c:1,e:'Inventário.'},
+{s:'ESP',t:'(V/F) ( ) Cargo em comissão é de livre nomeação e exoneração. ( ) A posse investe o servidor no cargo. ( ) A estabilidade vem da simples nomeação.',o:['V – V – F','V – F – V','F – V – F','V – V – V','F – F – V'],c:0,e:'A estabilidade NÃO vem da simples nomeação → V, V, F.'},
+{s:'ESP',t:'A anulação de um ato administrativo:',o:['decorre de razões de conveniência.','decorre de ilegalidade e tem, em regra, efeitos ex tunc.','só pode ser feita após 10 anos.','é privativa do Legislativo.','gera só efeitos ex nunc sempre.'],c:1,e:'Anulação = ilegalidade, efeitos retroativos (ex tunc).'},
+{s:'ESP',t:'Sobre o poder de polícia, assinale a INCORRETA:',o:['condiciona direitos individuais em prol do interesse coletivo.','pode atuar de forma preventiva e repressiva.','é ilimitado e não se sujeita à lei.','abrange a fiscalização de posturas municipais.','deve respeitar a proporcionalidade.'],c:2,e:'INCORRETA: o poder de polícia não é ilimitado e se sujeita à lei.'},
+{s:'ESP',t:'A contratação por tempo determinado para necessidade temporária de excepcional interesse público:',o:['é vedada em qualquer caso.','está prevista no art. 37, IX, e independe de concurso regular.','gera estabilidade imediata.','só vale para cargos de chefia.','exige idade mínima de 30 anos.'],c:1,e:'Prevista no art. 37, IX, da CF.'},
+{s:'ESP',t:'Relacione: (1) Ata (2) Portaria (3) Despacho — ( ) decisão/encaminhamento em processo ( ) registro do que ocorreu em reunião ( ) disciplina assunto de competência do emissor:',o:['3 – 1 – 2','1 – 2 – 3','2 – 1 – 3','3 – 2 – 1','1 – 3 – 2'],c:0,e:'Despacho=3, Ata=1, Portaria=2 → 3–1–2.'},
+{s:'ESP',t:'Na LGPD, "titular" dos dados é:',o:['a empresa que coleta os dados.','a pessoa natural a quem se referem os dados.','o órgão fiscalizador.','o operador.','o encarregado.'],c:1,e:'Titular = pessoa natural a quem os dados se referem.'},
+{s:'ESP',t:'A ouvidoria (Lei 13.460/2017) NÃO tem como atribuição:',o:['receber e analisar manifestações.','promover a participação do usuário.','julgar e condenar penalmente o servidor.','propor melhorias nos serviços.','acompanhar a prestação dos serviços.'],c:2,e:'A ouvidoria não julga nem condena penalmente.'},
+{s:'ESP',t:'São formas de VACÂNCIA de cargo público:',o:['nomeação e promoção.','exoneração, demissão e aposentadoria.','posse e exercício.','advertência e suspensão.','férias e licença.'],c:1,e:'Vacância: exoneração, demissão, aposentadoria.'}
+]},
+
+{title:'Simulado 3', q:[
+{s:'PT',p:P3,t:'Depreende-se do texto que a função pública:',o:['pertence ao servidor individualmente.','pertence à sociedade e deve servir ao interesse coletivo.','pode ser exercida conforme a vontade pessoal do agente.','independe da legalidade.','não é custeada pelo cidadão.'],c:1,e:'A função pertence à sociedade e serve ao interesse coletivo.'},
+{s:'PT',p:P3,t:'"que sustenta, com seus tributos, toda a máquina pública" — o "que" retoma:',o:['o servidor.','a decisão.','o cidadão.','a confiança.','a legalidade.'],c:2,e:'O "que" retoma "o cidadão".'},
+{s:'PT',p:P3,t:'A palavra "trair" tem como antônimo adequado ao contexto:',o:['enganar.','honrar.','abandonar.','ocultar.','ignorar.'],c:1,e:'Antônimo de trair = honrar.'},
+{s:'PT',p:P3,t:'Em "deve orientar-se pela legalidade", o "se" é:',o:['índice de indeterminação do sujeito.','partícula apassivadora.','parte integrante do verbo (pronominal).','conjunção condicional.','objeto direto.'],c:2,e:'"Orientar-se" é verbo pronominal; o "se" é parte integrante.'},
+{s:'PT',t:'Assinale a frase em que a crase é OBRIGATÓRIA:',o:['Vou a Brasília.','Entreguei o ofício a ele.','Compareça à audiência marcada.','Estudo a noite toda.','Refiro-me a casos antigos.'],c:2,e:'"Comparecer a" + "a audiência" → crase obrigatória.'},
+{s:'PT',t:'Assinale a opção corretamente pontuada:',o:['Os candidatos aprovados, receberão a nomeação.','Atenciosamente, encerro o ofício.','Comprou três itens canetas, papéis e clipes.','O servidor; chegou cedo.','Embora cansado terminou o serviço.'],c:1,e:'"Atenciosamente, encerro o ofício." — vírgula correta.'},
+{s:'PT',t:'"Vendem-se salas comerciais." Quanto à voz e ao sujeito:',o:['voz ativa, sujeito indeterminado.','voz passiva sintética, sujeito "salas comerciais".','voz passiva analítica.','sujeito inexistente.','oração sem sujeito.'],c:1,e:'Passiva sintética; sujeito = "salas comerciais".'},
+{s:'PT',t:'Assinale a palavra acentuada por ser PROPAROXÍTONA:',o:['jacaré.','árvore.','troféu.','país.','você.'],c:1,e:'"Árvore" é proparoxítona.'},
+{s:'PT',t:'Em "Quero que você estude", a oração "que você estude" é subordinada substantiva:',o:['subjetiva.','objetiva direta.','predicativa.','completiva nominal.','apositiva.'],c:1,e:'Completa o verbo "quero" → objetiva direta.'},
+{s:'PT',t:'Assinale a concordância verbal CORRETA:',o:['Houveram problemas no sistema.','Faz cinco anos que ele saiu.','Tinha muitas pessoas na fila.','Aconteceram pouco erros.','Devem haver soluções.'],c:1,e:'"Faz cinco anos" (fazer impessoal, singular).'},
+{s:'PT',t:'"Se houver consenso, aprovaremos a proposta." A oração destacada é:',o:['causal.','condicional.','concessiva.','temporal.','final.'],c:1,e:'"Se houver..." é condicional.'},
+{s:'PT',t:'Assinale a alternativa com grafia correta:',o:['iminência (proximidade) / eminência (altura, destaque).','iminência (destaque) / eminência (proximidade).','iminencia / eminencia.','imminência / emminência.','as duas são sinônimas.'],c:0,e:'Iminência = proximidade; eminência = altura/destaque.'},
+{s:'PT',t:'O plural de "guarda-chuva" e "couve-flor" é:',o:['guarda-chuvas / couves-flores.','guardas-chuva / couve-flores.','guarda-chuvas / couve-flor.','guardas-chuvas / couves-flor.','guarda-chuva / couves-flores.'],c:0,e:'guarda-chuvas / couves-flores.'},
+{s:'PT',t:'Em "O cidadão entregou os documentos ao atendente", "ao atendente" é:',o:['objeto direto.','objeto indireto.','sujeito.','aposto.','vocativo.'],c:1,e:'"Entregar algo a alguém" → objeto indireto.'},
+{s:'PT',t:'Assinale a colocação pronominal de acordo com a norma culta:',o:['Me parece justo.','Jamais se viu algo assim.','Tinha contado-lhe tudo.','Quero falar-te? não.','Eis-me; aqui.'],c:1,e:'"Jamais se viu" (próclise por palavra negativa).'},
+{s:'MAT',t:'Para imprimir 900 páginas, leva 30 min. Quantos minutos leva para 600 páginas, no mesmo ritmo?',o:['15','18','20','24','25'],c:2,e:'30/900 por página → 600 → 20 min.'},
+{s:'MAT',t:'Após desconto de 20%, um item passou a custar R$ 160,00. O preço original era:',o:['R$ 180,00','R$ 192,00','R$ 200,00','R$ 208,00','R$ 220,00'],c:2,e:'×0,8 = 160 → original = 200.'},
+{s:'MAT',t:'A média aritmética entre 7, 9 e 14 é:',o:['9','10','11','12','30'],c:1,e:'(7+9+14)/3 = 10.'},
+{s:'MAT',t:'Numa razão de 3 para 5, se a primeira parte vale 18, a segunda vale:',o:['24','28','30','32','36'],c:2,e:'18/3 = 6; 5×6 = 30.'},
+{s:'MAT',t:'Um quadrado tem perímetro de 36 cm. A área é:',o:['49 cm²','64 cm²','81 cm²','100 cm²','121 cm²'],c:2,e:'Lado = 9; área = 81 cm².'},
+{s:'INF',t:'No MS Word em português, o atalho Ctrl + I aplica:',o:['negrito.','itálico.','sublinhado.','salvar.','imprimir.'],c:1,e:'Ctrl+I = itálico.'},
+{s:'INF',t:'No Excel, a função =MÉDIA(B1:B4) retorna:',o:['a soma dos valores.','a média aritmética dos valores.','o maior valor.','o número de células preenchidas.','o menor valor.'],c:1,e:'Retorna a média aritmética do intervalo.'},
+{s:'INF',t:'No Windows, o atalho Win + E geralmente abre:',o:['o navegador.','o Explorador de Arquivos.','o menu Iniciar.','a calculadora.','o painel de controle.'],c:1,e:'Win+E abre o Explorador de Arquivos.'},
+{s:'INF',t:'Programa malicioso que se replica e danifica sistemas é genericamente chamado de:',o:['firewall.','malware (vírus/worm).','backup.','hardware.','driver.'],c:1,e:'Malware (vírus/worm).'},
+{s:'INF',t:'Sobre certificado digital, é CORRETO:',o:['substitui a necessidade de internet.','é emitido por Autoridade Certificadora e atesta a identidade do titular no meio digital.','é o mesmo que senha de e-mail.','torna o computador mais rápido.','elimina a necessidade de antivírus.'],c:1,e:'Emitido por AC; atesta a identidade do titular no meio digital.'},
+{s:'ESP',t:'A exigência de divulgação oficial dos atos, garantindo conhecimento e controle, decorre do princípio da:',o:['eficiência.','publicidade.','moralidade.','impessoalidade.','legalidade.'],c:1,e:'Publicidade.'},
+{s:'ESP',t:'A remuneração dos servidores e o subsídio dos agentes políticos sujeitam-se ao:',o:['reajuste automático mensal.','teto remuneratório constitucional.','livre arbítrio do gestor.','valor fixado por portaria.','câmbio do dólar.'],c:1,e:'Teto remuneratório constitucional.'},
+{s:'ESP',t:'Sobre cargo público, assinale a CORRETA:',o:['é criado por decreto sem lei.','é o conjunto de atribuições e responsabilidades criado por lei, com denominação própria.','só existe na iniciativa privada.','dispensa concurso em todos os casos.','é sinônimo de função de confiança.'],c:1,e:'Cargo = conjunto de atribuições criado por lei, com denominação própria.'},
+{s:'ESP',t:'A recondução é a forma de provimento em que o servidor:',o:['é demitido por falta grave.','retorna ao cargo anterior por inabilitação em estágio probatório de outro cargo ou reintegração do antecessor.','sobe de nível por antiguidade.','é exonerado a pedido.','muda de município.'],c:1,e:'Recondução = retorno ao cargo anterior nas hipóteses legais.'},
+{s:'ESP',t:'As sociedades de economia mista e empresas públicas:',o:['integram a Administração Direta.','integram a Administração Indireta.','são órgãos sem personalidade jurídica.','são entidades privadas sem vínculo com o Estado.','não podem ser criadas por lei.'],c:1,e:'Integram a Administração Indireta.'},
+{s:'ESP',t:'O ato administrativo discricionário caracteriza-se por:',o:['ausência total de limites legais.','margem de juízo de conveniência e oportunidade dentro da lei.','impossibilidade de controle judicial de legalidade.','vinculação absoluta a um único resultado.','ser sempre ilegal.'],c:1,e:'Juízo de conveniência/oportunidade dentro da lei.'},
+{s:'ESP',t:'Representa o poder VINCULADO:',o:['a Administração escolhe livremente a solução.','a lei define um único comportamento possível ao administrador.','o gestor decide por conveniência.','há liberdade de mérito.','o ato pode ser revogado por oportunidade.'],c:1,e:'Vinculado: a lei define um único comportamento.'},
+{s:'ESP',t:'A autoexecutoriedade permite que a Administração:',o:['execute suas decisões sem prévia autorização judicial, em certos casos.','ignore a lei.','só atue após autorização judicial sempre.','delegue ao particular a função pública.','anule qualquer lei.'],c:0,e:'Executar decisões sem prévia autorização do Judiciário, em certos casos.'},
+{s:'ESP',t:'O diálogo competitivo (Lei 14.133) é indicado para:',o:['compras rotineiras de material de escritório.','contratações de inovação ou soluções complexas, com diálogo com licitantes.','alienação de bens.','trabalho técnico ou artístico premiado.','serviços comuns de limpeza.'],c:1,e:'Inovação/complexidade, mediante diálogo com licitantes.'},
+{s:'ESP',t:'A fase em que se verifica se o licitante reúne condições para contratar é a:',o:['preparatória.','de julgamento.','de habilitação.','recursal.','de homologação.'],c:2,e:'Habilitação verifica as condições do licitante.'},
+{s:'ESP',t:'A sequência CORRETA das fases da licitação (Lei 14.133/2021) é:',o:['edital → habilitação → julgamento → homologação.','preparatória → divulgação do edital → propostas/lances → julgamento → habilitação → recursal → homologação.','julgamento → edital → habilitação → recursal.','homologação → propostas → edital → julgamento.','habilitação → edital → propostas → julgamento.'],c:1,e:'Preparatória, edital, propostas/lances, julgamento, habilitação, recursal, homologação.'},
+{s:'ESP',t:'(V/F) ( ) Tomada de preços e convite continuam existindo. ( ) O pregão destina-se a bens e serviços comuns. ( ) A dispensa por valor tem limites atualizados por decreto.',o:['F – V – V','V – V – F','F – F – V','V – F – V','F – V – F'],c:0,e:'Tomada de preços e convite NÃO continuam → F, V, V.'},
+{s:'ESP',t:'A inexigibilidade para serviços técnicos especializados exige serviço:',o:['de baixo custo.','de natureza predominantemente intelectual e com notória especialização.','realizado por qualquer fornecedor.','urgente e emergencial.','de pequeno valor.'],c:1,e:'Natureza intelectual + notória especialização.'},
+{s:'ESP',t:'A homologação, na licitação, é o ato pelo qual a autoridade:',o:['abre o processo licitatório.','confirma a regularidade do procedimento e ratifica seu resultado.','elabora o edital.','recebe as propostas.','julga recursos de concurso.'],c:1,e:'Homologação ratifica o resultado e a regularidade.'},
+{s:'ESP',t:'(V/F) ( ) Há três espécies de improbidade. ( ) Em regra, exige-se dolo. ( ) A improbidade é infração penal, com pena de prisão.',o:['V – V – F','V – F – V','F – V – V','V – V – V','F – F – F'],c:0,e:'Improbidade não é crime com prisão (é ação civil) → V, V, F.'},
+{s:'ESP',t:'É consequência da improbidade administrativa (art. 37, §4º, CF):',o:['a indisponibilidade dos bens.','a perda de pontos da CNH.','a transferência de cargo.','o aumento de salário.','a aposentadoria compulsória.'],c:0,e:'Indisponibilidade dos bens é uma das consequências.'},
+{s:'ESP',t:'Na LAI, o prazo de classificação como RESERVADA é de, no máximo:',o:['5 anos.','15 anos.','25 anos.','50 anos.','100 anos.'],c:0,e:'Reservada: até 5 anos.'},
+{s:'ESP',t:'Relacione graus de sigilo × prazo (LAI): (1) Ultrassecreta (2) Secreta (3) Reservada — ( ) 5 anos ( ) 25 anos ( ) 15 anos:',o:['3 – 1 – 2','1 – 2 – 3','3 – 2 – 1','2 – 1 – 3','1 – 3 – 2'],c:0,e:'5 anos=Reservada(3), 25=Ultrassecreta(1), 15=Secreta(2) → 3–1–2.'},
+{s:'ESP',t:'A Lei 13.460/2017 assegura ao usuário o direito de:',o:['ser atendido apenas mediante pagamento.','ter atendimento com presunção de boa-fé, igualdade e qualidade.','furar filas por indicação política.','acesso somente presencial.','receber resposta em até 5 anos.'],c:1,e:'Atendimento com boa-fé, igualdade e qualidade.'},
+{s:'ESP',t:'São princípios da LGPD (art. 6º), EXCETO:',o:['finalidade.','necessidade.','transparência.','segurança.','anonimato obrigatório de todos os dados.'],c:4,e:'"Anonimato obrigatório de todos os dados" não é princípio da LGPD.'},
+{s:'ESP',t:'Na LGPD, o operador é:',o:['quem decide sobre o tratamento.','quem realiza o tratamento em nome do controlador.','o titular dos dados.','a autoridade nacional.','o juiz da causa.'],c:1,e:'Operador trata dados em nome do controlador.'},
+{s:'ESP',t:'O instrumento que define metas e prioridades para o exercício seguinte e orienta a LOA é:',o:['o PPA.','a LDO.','a LOA.','o balancete.','o empenho.'],c:1,e:'A LDO define metas/prioridades e orienta a LOA.'},
+{s:'ESP',t:'(V/F) ( ) O PPA tem vigência de quatro anos. ( ) A LOA estima receitas e fixa despesas para um ano. ( ) A LDO deve estar em consonância com o PPA.',o:['V – V – V','V – F – V','F – V – F','V – V – F','F – F – V'],c:0,e:'Todas verdadeiras → V, V, V.'},
+{s:'ESP',t:'O ofício é um documento oficial caracterizado por ser:',o:['comunicação informal entre amigos.','expediente de comunicação oficial, inclusive externa, entre órgãos e com particulares.','registro de reunião.','norma com força de lei.','recibo de pagamento.'],c:1,e:'Ofício = comunicação oficial, inclusive externa.'},
+{s:'ESP',t:'A ética e o sigilo profissional do servidor implicam:',o:['divulgar livremente dados de terceiros.','guardar sigilo de informações obtidas em razão do cargo, salvo quando a lei exigir publicidade.','comentar processos com qualquer pessoa.','usar informações funcionais em benefício próprio.','ignorar a proteção de dados.'],c:1,e:'Guardar sigilo, salvo quando a lei exigir publicidade.'},
+{s:'ESP',t:'O processo administrativo disciplinar (PAD) assegura ao servidor:',o:['condenação sem defesa.','contraditório e ampla defesa.','julgamento secreto sem participação.','ausência de recurso.','punição automática.'],c:1,e:'Contraditório e ampla defesa.'},
+{s:'ESP',t:'Comunicar a chefia sobre dano ou extravio em bem público liga-se a:',o:['prevenção de perdas e zelo pelo patrimônio.','execução orçamentária.','processo licitatório.','folha de pagamento.','cálculo de tributos.'],c:0,e:'Prevenção de perdas e zelo pelo patrimônio.'},
+{s:'ESP',t:'(V/F) ( ) A anulação decorre de ilegalidade. ( ) A revogação decorre de conveniência e oportunidade. ( ) Ato revogado tem efeitos retroativos (ex tunc).',o:['V – V – F','V – F – V','F – V – F','V – V – V','F – F – V'],c:0,e:'A revogação tem efeito ex nunc (não retroage) → V, V, F.'},
+{s:'ESP',t:'A competência, como requisito do ato administrativo:',o:['pode ser livremente escolhida pelo agente.','é o poder atribuído por lei ao agente para a prática do ato.','é irrelevante para a validade.','decorre de costume.','é transferível por vontade própria sem previsão legal.'],c:1,e:'Competência = poder atribuído por lei ao agente.'},
+{s:'ESP',t:'Sobre o poder hierárquico, é CORRETO:',o:['existe entre órgãos de pessoas jurídicas diferentes.','permite ordenar, fiscalizar, rever e delegar/avocar atribuições dentro do órgão.','autoriza punir cidadãos comuns.','é o mesmo que poder de polícia.','não admite revisão de atos.'],c:1,e:'Ordenar, fiscalizar, rever, delegar/avocar dentro do órgão.'},
+{s:'ESP',t:'Servidor investido em mandato de vereador, havendo compatibilidade de horários:',o:['deve obrigatoriamente se afastar do cargo.','perceberá as vantagens do cargo e a remuneração do mandato.','perde o cargo público.','é exonerado automaticamente.','não pode acumular nada.'],c:1,e:'Acumula vantagens do cargo + remuneração do mandato.'},
+{s:'ESP',t:'Relacione princípio × significado: (1) Legalidade (2) Impessoalidade (3) Eficiência — ( ) atuar sem favorecimentos ( ) agir conforme a lei ( ) buscar melhores resultados:',o:['2 – 1 – 3','1 – 2 – 3','3 – 2 – 1','2 – 3 – 1','1 – 3 – 2'],c:0,e:'Sem favorecimentos=2, conforme a lei=1, melhores resultados=3 → 2–1–3.'},
+{s:'ESP',t:'Os dados pessoais sensíveis recebem proteção reforçada na LGPD porque:',o:['são públicos por natureza.','seu uso indevido pode gerar discriminação (saúde, religião, raça, opinião política).','não têm valor.','pertencem ao Estado.','são apenas dados financeiros.'],c:1,e:'Risco de discriminação justifica a proteção reforçada.'},
+{s:'ESP',t:'A Carta de Serviços ao Usuário (Lei 13.460) deve conter:',o:['dados bancários dos servidores.','serviços oferecidos, requisitos e prazos de atendimento.','senhas de acesso aos sistemas.','lista de processos sigilosos.','declaração de imposto de renda.'],c:1,e:'Serviços, requisitos e prazos de atendimento.'},
+{s:'ESP',t:'Assinale a alternativa que contém somente PENALIDADES disciplinares:',o:['advertência, suspensão e demissão.','nomeação, posse e exercício.','férias, licença e abono.','promoção, progressão e gratificação.','empenho, liquidação e pagamento.'],c:0,e:'Penalidades: advertência, suspensão, demissão.'}
+]}
+];
+
+/* ====== ESTADO ====== */
+let mode='train', simIdx=0, cur=0, answers=[], order=[], startTime=0, timerInt=null;
+
+const $=id=>document.getElementById(id);
+const SECCOLOR={PT:'#c8761b',MAT:'#2f8f5b',INF:'#3a6ea5',ESP:'#8a5cd1'};
+
+/* ====== SALVAMENTO AUTOMÁTICO ====== */
+const SKEY='cambeQuizV1';
+let canPersist=true;
+try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }catch(e){ canPersist=false; }
+function loadAll(){ try{ return JSON.parse(localStorage.getItem(SKEY)||'{}'); }catch(e){ return {}; } }
+function saveAll(o){ try{ localStorage.setItem(SKEY, JSON.stringify(o)); }catch(e){ canPersist=false; } }
+function getSaved(i){ return loadAll()['sim'+i]||null; }
+function clearProgress(i){ const a=loadAll(); delete a['sim'+i]; saveAll(a); }
+let savedT=null;
+function flashSaved(){ const n=$('savedNote'); if(!n)return; n.textContent='✓ salvo automaticamente'; n.style.opacity='1'; clearTimeout(savedT); savedT=setTimeout(()=>{n.style.opacity='0';},1400); }
+function saveProgress(){
+  if(!canPersist) return;
+  const a=loadAll();
+  a['sim'+simIdx]={answers,order,cur,mode,elapsed:Math.floor((Date.now()-startTime)/1000),savedAt:Date.now()};
+  saveAll(a); flashSaved();
+}
+function goHome(){ clearInterval(timerInt); $('result').style.display='none'; $('quiz').style.display='none'; $('start').style.display='block'; buildStart(); window.scrollTo(0,0); }
+
+// start screen
+function buildStart(){
+  const wrap=$('simBtns'); wrap.innerHTML='';
+  SIMS.forEach((s,i)=>{
+    const col=['#c8761b','#2f8f5b','#3a6ea5'][i];
+    const saved=getSaved(i);
+    const answered = saved ? saved.answers.filter(a=>a!==null).length : 0;
+    const sub = saved ? ('Continuar · '+answered+'/'+s.q.length+' respondidas') : '60 questões · ~3h';
+    const b=document.createElement('button'); b.className='sim';
+    b.innerHTML='<span class="dot" style="background:'+col+'">'+(i+1)+'</span>'+
+      '<span class="meta"><b>'+s.title+'</b><span>'+sub+'</span></span>'+
+      '<span class="go">'+(saved?'▸':'›')+'</span>';
+    b.onclick=()=>startSim(i, !!saved);
+    wrap.appendChild(b);
+    if(saved){
+      const rb=document.createElement('button'); rb.className='resetlink';
+      rb.textContent='recomeçar '+s.title+' do zero';
+      rb.onclick=(e)=>{e.stopPropagation(); if(confirm('Apagar o progresso salvo do '+s.title+' e recomeçar do zero?')){clearProgress(i); buildStart();}};
+      wrap.appendChild(rb);
+    }
+  });
+  if(!canPersist){
+    const w=document.createElement('div'); w.className='persistwarn';
+    w.textContent='Obs: o salvamento automático não funciona neste modo de visualização. Baixe o arquivo e abra direto no navegador (Chrome/Safari) para que seu progresso fique salvo ao sair e voltar.';
+    wrap.appendChild(w);
+  }
+}
+$('modeBtns').querySelectorAll('button').forEach(b=>{
+  b.onclick=()=>{
+    mode=b.dataset.mode;
+    $('modeBtns').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    $('modeHint').textContent = mode==='train'
+      ? 'Modo treino: ao responder, mostra na hora se acertou e a explicação. Bom pra aprender.'
+      : 'Modo prova: você responde tudo e só vê a correção e as explicações no final. Mais próximo do dia da prova.';
+  };
+});
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startSim(i, resume){
+  simIdx=i;
+  const qs=SIMS[i].q;
+  const saved = resume ? getSaved(i) : null;
+  if(saved && saved.order && saved.answers){
+    answers=saved.answers; order=saved.order; cur=saved.cur||0;
+    if(saved.mode) mode=saved.mode;
+    startTime=Date.now() - (saved.elapsed||0)*1000;
+  } else {
+    cur=0; answers=qs.map(()=>null);
+    order=qs.map(q=>{ const idx=shuffle([0,1,2,3,4]); return {disp:idx, correctDisp:idx.indexOf(q.c)}; });
+    startTime=Date.now();
+  }
+  // sincroniza botões de modo com o modo atual
+  $('modeBtns').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.mode===mode));
+  $('start').style.display='none'; $('result').style.display='none'; $('quiz').style.display='block';
+  clearInterval(timerInt);
+  timerInt=setInterval(()=>{
+    const s=Math.floor((Date.now()-startTime)/1000);
+    $('timer').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  },1000);
+  buildPalette();
+  render();
+  window.scrollTo(0,0);
+  saveProgress();
+}
+
+function buildPalette(){
+  const p=$('palette'); p.innerHTML='';
+  SIMS[simIdx].q.forEach((_,i)=>{
+    const c=document.createElement('button'); c.className='pchip'; c.textContent=i+1;
+    c.onclick=()=>{cur=i;render();saveProgress();window.scrollTo(0,0);};
+    p.appendChild(c);
+  });
+}
+function refreshPalette(){
+  $('palette').querySelectorAll('.pchip').forEach((c,i)=>{
+    c.classList.toggle('answered',answers[i]!==null);
+    c.classList.toggle('cur',i===cur);
+  });
+}
+
+function render(){
+  const q=SIMS[simIdx].q[cur], ord=order[cur];
+  $('qCounter').textContent=(cur+1)+' / '+SIMS[simIdx].q.length;
+  $('qSec').textContent=SEC[q.s];
+  $('qSec').style.background=SECCOLOR[q.s]+'22'; $('qSec').style.color=SECCOLOR[q.s];
+  $('progBar').style.width=((cur+1)/SIMS[simIdx].q.length*100)+'%';
+  $('passageBox').innerHTML = q.p ? '<div class="passage">'+q.p+'</div>' : '';
+  $('qNum').textContent='Questão '+(cur+1);
+  $('qText').textContent=q.t;
+  const letters=['A','B','C','D','E'];
+  const opts=$('opts'); opts.innerHTML='';
+  const ans=answers[cur];
+  ord.disp.forEach((origIdx,dispPos)=>{
+    const btn=document.createElement('button'); btn.className='opt';
+    btn.innerHTML='<span class="lt">'+letters[dispPos]+'</span><span>'+q.o[origIdx]+'</span>';
+    if(ans!==null){
+      btn.classList.add('locked');
+      if(mode==='train'){
+        if(dispPos===ord.correctDisp) btn.classList.add('correct');
+        else if(dispPos===ans) btn.classList.add('wrong');
+      } else {
+        if(dispPos===ans) btn.classList.add('sel');
+      }
+    }
+    btn.onclick=()=>choose(dispPos);
+    opts.appendChild(btn);
+  });
+  // explicação (só no modo treino, após responder)
+  const ex=$('explain');
+  if(mode==='train' && ans!==null){
+    const ok=ans===ord.correctDisp;
+    ex.style.display='block';
+    ex.className='explain '+(ok?'ok':'no');
+    ex.innerHTML=(ok?'<b>✓ Correto!</b> ':'<b>✗ Resposta correta: '+letters[ord.correctDisp]+'.</b> ')+q.e;
+  } else { ex.style.display='none'; }
+  $('prevBtn').disabled=cur===0;
+  $('nextBtn').textContent = cur===SIMS[simIdx].q.length-1 ? 'Última' : 'Próxima →';
+  refreshPalette();
+}
+
+function choose(dispPos){
+  if(mode==='train' && answers[cur]!==null) return; // trava após responder no treino
+  answers[cur]=dispPos;
+  render();
+  saveProgress();
+}
+
+$('prevBtn').onclick=()=>{ if(cur>0){cur--;render();saveProgress();window.scrollTo(0,0);} };
+$('nextBtn').onclick=()=>{ if(cur<SIMS[simIdx].q.length-1){cur++;render();saveProgress();window.scrollTo(0,0);} };
+$('menuBtn').onclick=()=>{ saveProgress(); goHome(); };
+$('finishBtn').onclick=()=>finish();
+
+function finish(){
+  const unanswered=answers.filter(a=>a===null).length;
+  if(unanswered>0 && !confirm('Você deixou '+unanswered+' questão(ões) em branco. Finalizar mesmo assim?')) return;
+  clearInterval(timerInt);
+  clearProgress(simIdx);
+  const qs=SIMS[simIdx].q;
+  let total=0; const by={PT:[0,0],MAT:[0,0],INF:[0,0],ESP:[0,0]}; const wrong=[];
+  qs.forEach((q,i)=>{
+    by[q.s][1]++;
+    const ok = answers[i]!==null && answers[i]===order[i].correctDisp;
+    if(ok){total++; by[q.s][0]++;}
+    else wrong.push({i,q});
+  });
+  $('quiz').style.display='none'; $('result').style.display='block';
+  $('resTitle').textContent=SIMS[simIdx].title+' — Resultado';
+  $('scoreNum').textContent=total;
+  const mins=Math.floor((Date.now()-startTime)/60000);
+  $('timeSpent').textContent='Tempo: ~'+mins+' min';
+  const zeroed=Object.values(by).some(v=>v[0]===0);
+  const pass = total>=30 && !zeroed;
+  const v=$('verdict'); v.className='verdict '+(pass?'pass':'fail');
+  v.textContent= pass ? '✓ Aprovado no simulado' : (zeroed?'Atenção: matéria zerada':'Abaixo da meta (30+)');
+  // breakdown
+  const rows=$('bdRows'); rows.innerHTML='';
+  [['PT','Português'],['MAT','Matemática'],['INF','Informática'],['ESP','Conhec. Específicos']].forEach(([k,nm])=>{
+    const [ac,tt]=by[k]; const pct=Math.round(ac/tt*100);
+    const r=document.createElement('div'); r.className='brow';
+    r.innerHTML='<span class="bl">'+nm+'</span><span class="bbar"><i style="width:'+pct+'%;background:'+SECCOLOR[k]+'"></i></span><span class="bv">'+ac+'/'+tt+'</span>';
+    rows.appendChild(r);
+  });
+  // review
+  const rl=$('reviewList'); rl.innerHTML='';
+  $('reviewSub').textContent = wrong.length===0 ? 'Você acertou tudo. Excelente!' : 'Você errou '+wrong.length+' questão(ões). Revise abaixo:';
+  const letters=['A','B','C','D','E'];
+  wrong.forEach(({i,q})=>{
+    const correctText=q.o[ order[i].disp[ order[i].correctDisp ] ];
+    const d=document.createElement('div'); d.className='ritem';
+    d.innerHTML='<b>Q'+(i+1)+' ('+SEC[q.s]+'):</b> '+q.t+'<br><span class="ra">Correta: '+correctText+'</span><br><span style="color:var(--muted)">'+q.e+'</span>';
+    rl.appendChild(d);
+  });
+  window.scrollTo(0,0);
+}
+
+$('againBtn').onclick=()=>startSim(simIdx,false);
+$('homeBtn').onclick=()=>goHome();
+
+buildStart();
+</script>
+</body>
+</html>

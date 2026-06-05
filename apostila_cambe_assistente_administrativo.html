@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apostila — Assistente Administrativo III · Cambé 001/2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Spline+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f1e7;--paper:#fffdf8;--ink:#2a2418;--muted:#857a64;
+    --line:#e4dcc9;--accent:#c8761b;--accent-soft:#f5e4cc;--green:#2f8f5b;--blue:#3a6ea5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{background:var(--bg);color:var(--ink);font-family:'Spline Sans',sans-serif;line-height:1.6;
+    max-width:820px;margin:0 auto;padding:20px 16px 80px;}
+  .kicker{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:2rem;line-height:1.05;margin:6px 0 4px;}
+  .lead{color:var(--muted);font-size:.92rem;margin-bottom:20px;}
+  .box{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px;}
+  .box.tip{background:var(--accent-soft);border-color:#e6c89a;}
+  .box.tip b{color:#9a5a13;}
+  .links a{display:block;color:var(--blue);text-decoration:none;font-size:.86rem;padding:3px 0;font-weight:500;}
+  .links a:before{content:"↓ ";color:var(--accent);}
+
+  .toc{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:22px;}
+  .toc h2{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:10px;}
+  .toc a{display:block;color:var(--ink);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--line);font-size:.9rem;font-weight:500;}
+  .toc a:last-child{border-bottom:none;}
+  .toc a span{color:var(--accent);font-weight:700;margin-right:8px;}
+
+  details{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;}
+  details[open]{box-shadow:0 2px 14px rgba(80,60,20,.07);}
+  summary{cursor:pointer;padding:14px 16px;font-weight:600;font-size:.96rem;list-style:none;display:flex;justify-content:space-between;align-items:center;}
+  summary::-webkit-details-marker{display:none;}
+  summary:after{content:"+";color:var(--accent);font-size:1.3rem;font-weight:700;}
+  details[open] summary:after{content:"–";}
+  .inner{padding:0 16px 16px;font-size:.92rem;}
+
+  h2.sec{font-family:'Fraunces',serif;font-size:1.35rem;margin:28px 0 12px;padding-top:10px;border-top:2px solid var(--accent);color:#9a5a13;}
+  h3{font-family:'Fraunces',serif;font-size:1.02rem;margin:14px 0 6px;color:var(--ink);}
+  .art{margin:8px 0;}
+  .art b{color:var(--accent);}
+  ul{margin:6px 0 6px 18px;}
+  li{margin-bottom:3px;}
+  .num{background:var(--accent-soft);color:#9a5a13;border-radius:6px;padding:1px 7px;font-weight:700;font-size:.85em;white-space:nowrap;}
+  .key{background:#fff6e8;border-left:3px solid var(--accent);border-radius:6px;padding:8px 12px;margin:10px 0;font-size:.9rem;}
+  .toplink{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;border:none;border-radius:50%;width:48px;height:48px;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.2);}
+  .disc{font-size:.82rem;color:var(--muted);}
+  .badge{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle;}
+  .badge.fed{background:#dfeaf6;color:var(--blue);}
+  .badge.mun{background:var(--accent-soft);color:#9a5a13;}
+</style>
+</head>
+<body id="topo">
+  <div class="kicker">Concurso Cambé 001/2026 · Instituto UniFil</div>
+  <h1>Apostila de Estudo</h1>
+  <div class="lead">Assistente Administrativo III · Estatuto de Cambé + leis federais reunidos num arquivo só, pra estudar offline. A banca cobra a <b>letra da lei</b> — foque em números, prazos e listas.</div>
+
+  <div class="box tip">
+    <b>Como usar:</b> abra as seções tocando nos títulos. As caixas destacadas (com barra laranja) marcam o que mais cai. Estude conferindo sempre os números. Pra revisar na academia, use junto com o reprodutor de áudio e o questionário.
+  </div>
+
+  <div class="box">
+    <b style="font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)">Texto oficial completo (para baixar)</b>
+    <div class="links" style="margin-top:8px">
+      <a href="https://www.cambe.pr.leg.br/estatuto-do-servidor-1/at_download/file">Estatuto dos Servidores de Cambé (Lei 1.718/2003) — PDF da Câmara</a>
+      <a href="https://www.cambe.pr.gov.br/index.php/download/lei-organica-do-municipio-de-cambe-2/">Lei Orgânica de Cambé — Prefeitura</a>
+      <a href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm">Constituição Federal (arts. 37–41) — Planalto</a>
+      <a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm">Lei 14.133/2021 (Licitações) — Planalto</a>
+      <a href="https://www.planalto.gov.br/ccivil_03/leis/l8429.htm">Lei 8.429/1992 (Improbidade) — Planalto</a>
+      <a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm">Lei 12.527/2011 (Acesso à Informação) — Planalto</a>
+      <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13460.htm">Lei 13.460/2017 (Usuário) — Planalto</a>
+      <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">LGPD — Lei 13.709/2018 — Planalto</a>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h2>Índice</h2>
+    <a href="#estatuto"><span>1</span>Estatuto dos Servidores de Cambé (Lei 1.718/2003)</a>
+    <a href="#organica"><span>2</span>Lei Orgânica de Cambé (Títulos I–III)</a>
+    <a href="#cf"><span>3</span>Constituição Federal — arts. 37 a 41</a>
+    <a href="#l14133"><span>4</span>Lei 14.133/2021 — Licitações e Contratos</a>
+    <a href="#l8429"><span>5</span>Lei 8.429/1992 — Improbidade Administrativa</a>
+    <a href="#lai"><span>6</span>Lei 12.527/2011 — Acesso à Informação</a>
+    <a href="#l13460"><span>7</span>Lei 13.460/2017 — Direitos do Usuário</a>
+    <a href="#lgpd"><span>8</span>LGPD — Lei 13.709/2018</a>
+  </div>
+
+  <!-- ===================== 1. ESTATUTO ===================== -->
+  <h2 class="sec" id="estatuto">1. Estatuto dos Servidores de Cambé <span class="badge mun">Lei municipal 1.718/2003</span></h2>
+  <p class="disc">Texto oficial consolidado (com as alterações). Abaixo, os pontos que mais caem, com os artigos e prazos reais.</p>
+
+  <details open><summary>Disposições gerais e provimento</summary><div class="inner">
+    <div class="art"><b>Art. 1º</b> — O regime jurídico dos servidores de Cambé é o <b>ESTATUTÁRIO</b> (administração direta, autarquias e fundações, Executivo e Legislativo).</div>
+    <div class="art"><b>Art. 3º</b> — Cargo público é o <b>conjunto de atribuições e responsabilidades</b> previstas na estrutura organizacional, conferidas a um servidor. Criado por lei, com denominação própria.</div>
+    <div class="art"><b>Art. 5º — Requisitos para investidura:</b> nacionalidade brasileira (ou estrangeira na forma da lei); gozo dos direitos políticos; quitação militar e eleitoral; escolaridade exigida; <b>idade mínima de 18 anos</b>; aptidão física e mental.
+      <div class="key">§2º — Pessoas com deficiência: reserva de <span class="num">no mínimo 5%</span> das vagas do concurso.</div></div>
+    <div class="art"><b>Art. 8º — Formas de provimento:</b> nomeação, promoção, readaptação, reversão, aproveitamento, reintegração e recondução.</div>
+  </div></details>
+
+  <details><summary>Concurso, nomeação, posse e exercício</summary><div class="inner">
+    <div class="art"><b>Art. 9º</b> — Investidura em cargo efetivo: por <b>concurso público</b> de provas ou de provas e títulos.</div>
+    <div class="key"><b>Art. 10 — Validade do concurso:</b> <span class="num">até 2 anos</span>, prorrogável <b>uma única vez</b> por igual período. (Igual à CF.)</div>
+    <div class="art"><b>Art. 13</b> — A aprovação não gera direito à nomeação; quando ocorrer, respeita a ordem de classificação.</div>
+    <div class="art"><b>Art. 15</b> — Nomeação: em caráter <b>efetivo</b> (cargo de carreira/isolado) ou em <b>comissão</b> (cargos de confiança).</div>
+    <div class="key"><b>Art. 18 — Posse:</b> aceitação expressa das atribuições. Prazo: <span class="num">até 30 dias</span> da publicação do ato de provimento (§1º). No ato, o servidor apresenta <b>declaração de bens</b> (§5º). Só há posse na nomeação (§4º).</div>
+    <div class="art"><b>Art. 19</b> — A posse depende de prévia <b>inspeção médica oficial</b>.</div>
+    <div class="key"><b>Art. 20 — Exercício:</b> efetivo desempenho das atribuições. Prazo para entrar em exercício: <span class="num">15 dias</span> contados da posse (§1º). Não entrando, é exonerado (§2º).</div>
+  </div></details>
+
+  <details><summary>Estágio probatório e estabilidade ⭐</summary><div class="inner">
+    <div class="key"><b>Art. 23 — Estágio probatório.</b> Fatores avaliados: qualidade do trabalho, produtividade, iniciativa, presteza, pontualidade, assiduidade, administração do tempo, uso adequado dos equipamentos, aproveitamento em capacitação.
+      <br>§1º — Avaliação de desempenho <span class="num">a cada 6 meses</span>.</div>
+    <div class="key"><b>Art. 24 — Estabilidade:</b> após <span class="num">3 anos</span> de efetivo exercício (cargo efetivo + concurso).
+      <br>§1º — O estável só perde o cargo por: <b>(I)</b> sentença judicial transitada em julgado; <b>(II)</b> processo administrativo com ampla defesa; <b>(III)</b> avaliação periódica de desempenho, com ampla defesa.
+      <br>§4º — Exige <b>avaliação especial de desempenho</b> por comissão como condição para a estabilidade.</div>
+    <div class="art"><b>Art. 25</b> readaptação · <b>Art. 26</b> reversão · <b>Art. 30</b> reintegração (volta com ressarcimento, quando invalidada a demissão) · <b>Art. 32</b> recondução (retorno do estável ao cargo anterior).</div>
+  </div></details>
+
+  <details><summary>Vacância e exoneração</summary><div class="inner">
+    <div class="key"><b>Art. 38 — Vacância:</b> exoneração, demissão, promoção, readaptação, aposentadoria, posse em outro cargo inacumulável e falecimento.</div>
+    <div class="art"><b>Art. 39</b> — Exoneração de cargo <b>efetivo</b>: a pedido ou de ofício (de ofício: reprovação no estágio probatório, ou não entrar em exercício).</div>
+    <div class="art"><b>Art. 40</b> — Exoneração de cargo <b>em comissão</b>: a juízo da autoridade ou a pedido. (Exoneração ≠ punição.)</div>
+  </div></details>
+
+  <details><summary>Férias, licenças e licença-prêmio</summary><div class="inner">
+    <div class="key"><b>Art. 101 — Férias:</b> <span class="num">30 dias</span>/ano, vedada a acumulação. Reduzem conforme faltas injustificadas: até 5 faltas = 30 dias; 6 a 14 = 24; 15 a 23 = 18; 24 a 32 = 12; +32 = perde o direito.</div>
+    <div class="art"><b>Art. 112 — Licenças:</b> tratamento de saúde; gestante/adotante/paternidade; acidente em serviço; doença em pessoa da família; serviço militar; atividade política; interesses particulares; mandato classista; casamento (9 dias); luto; afastamento do cônjuge; compulsória; <b>licença-prêmio</b>.</div>
+    <div class="art"><b>Art. 127</b> — Licença-gestante: <span class="num">180 dias</span>. <b>Art. 128</b> — Licença-paternidade: <span class="num">5 dias</span>.</div>
+    <div class="art"><b>Art. 148 — Licença-prêmio:</b> <span class="num">3 meses</span> a cada quinquênio (5 anos) de exercício.</div>
+  </div></details>
+
+  <details><summary>Deveres (Art. 178) ⭐</summary><div class="inner">
+    <div class="art"><b>Art. 178 — São deveres do servidor:</b></div>
+    <ul>
+      <li>exercer com <b>zelo e dedicação</b> as atribuições;</li>
+      <li>ser <b>leal</b> às instituições;</li>
+      <li>observar as normas legais e regulamentares;</li>
+      <li>cumprir ordens superiores, <b>exceto quando manifestamente ilegais</b>;</li>
+      <li>atender com <b>presteza</b> o público e expedir certidões;</li>
+      <li>levar ao conhecimento da autoridade as irregularidades de que tiver ciência;</li>
+      <li>zelar pela economia do material e conservação do patrimônio público;</li>
+      <li>guardar <b>sigilo</b> sobre assunto da repartição;</li>
+      <li>manter conduta compatível com a moralidade administrativa;</li>
+      <li>ser <b>assíduo e pontual</b>;</li>
+      <li>tratar com <b>urbanidade</b> as pessoas;</li>
+      <li>representar contra ilegalidade, omissão ou abuso de poder.</li>
+    </ul>
+  </div></details>
+
+  <details><summary>Proibições (Art. 179) ⭐</summary><div class="inner">
+    <div class="art"><b>Art. 179 — Ao servidor é proibido (principais):</b></div>
+    <ul>
+      <li>ausentar-se do serviço no expediente sem autorização;</li>
+      <li>retirar documento/objeto da repartição sem anuência;</li>
+      <li>recusar fé a documentos públicos;</li>
+      <li>opor resistência injustificada ao andamento de processo;</li>
+      <li>valer-se do cargo para <b>proveito pessoal ou de outrem</b>;</li>
+      <li>participar de gerência/administração de empresa privada (salvo como acionista/quotista);</li>
+      <li><b>receber propina, comissão, presente ou vantagem</b> em razão do cargo;</li>
+      <li>praticar usura; proceder de forma desidiosa;</li>
+      <li>utilizar pessoal ou material da repartição em atividades particulares;</li>
+      <li>manter sob sua chefia, em cargo de confiança, <b>cônjuge ou parente até 2º grau</b> (nepotismo).</li>
+    </ul>
+  </div></details>
+
+  <details><summary>Acumulação e responsabilidades ⭐</summary><div class="inner">
+    <div class="art"><b>Art. 180</b> — Vedada a acumulação remunerada de cargos, salvo os casos da Constituição, e sempre com <b>compatibilidade de horários</b>.</div>
+    <div class="key"><b>Arts. 183 a 188 — Responsabilidades:</b> o servidor responde <b>civil, penal e administrativamente</b> (art. 183).
+      <br>• Civil: ato doloso ou culposo que cause prejuízo ao erário/terceiros (art. 184).
+      <br>• <b>Art. 187 — as sanções civis, penais e administrativas podem acumular-se, sendo independentes entre si.</b>
+      <br>• Art. 188 — a responsabilidade administrativa é afastada se a absolvição criminal <b>negar o fato ou a autoria</b>.</div>
+  </div></details>
+
+  <details><summary>Penalidades (Art. 189) e prescrição (Art. 203) ⭐⭐</summary><div class="inner">
+    <div class="key"><b>Art. 189 — Penalidades disciplinares:</b> <b>(I)</b> advertência; <b>(II)</b> suspensão; <b>(III)</b> demissão; <b>(IV)</b> cassação de aposentadoria ou disponibilidade; <b>(V)</b> destituição de cargo em comissão.</div>
+    <div class="art"><b>Art. 191</b> — Advertência: por escrito, em casos mais leves.</div>
+    <div class="key"><b>Art. 192 — Suspensão:</b> reincidência de falta punida com advertência; não pode exceder <span class="num">90 dias</span>. Pode ser convertida em multa (50% por dia).</div>
+    <div class="art"><b>Art. 193 — Demissão:</b> crime contra a administração; abandono de cargo; inassiduidade habitual; <b>improbidade administrativa</b>; insubordinação grave; corrupção; acumulação ilegal; aplicação irregular de dinheiro público; etc.</div>
+    <div class="art"><b>Art. 199</b> — Abandono de cargo: ausência intencional por <span class="num">+30 dias</span> consecutivos.<br>
+      <b>Art. 200</b> — Inassiduidade habitual: <span class="num">60 dias</span> de faltas, intercaladas, em 12 meses. <span class="disc">(confira no texto oficial; algumas versões trazem 60, o consolidado cita também outros marcos)</span></div>
+    <div class="key"><b>Art. 203 — Prescrição da ação disciplinar:</b>
+      <br>• <span class="num">5 anos</span> — demissão, cassação de aposentadoria/disponibilidade e destituição;
+      <br>• <span class="num">2 anos</span> — suspensão;
+      <br>• <span class="num">180 dias</span> — advertência.</div>
+  </div></details>
+
+  <details><summary>Processo Administrativo Disciplinar (PAD)</summary><div class="inner">
+    <div class="art"><b>Art. 205</b> — Quem tiver ciência de irregularidade é obrigado a apurar (sindicância ou PAD), assegurada <b>ampla defesa</b>.</div>
+    <div class="art"><b>Art. 207 — Sindicância:</b> pode resultar em arquivamento, advertência/suspensão até 30 dias, ou instauração de PAD. Prazo: <span class="num">30 dias</span>, prorrogável.</div>
+    <div class="art"><b>Art. 209 — Afastamento preventivo:</b> até <span class="num">60 dias</span> (prorrogável por igual prazo), sem prejuízo da remuneração.</div>
+    <div class="art"><b>Art. 211</b> — PAD conduzido por comissão de <b>3 servidores estáveis</b>.</div>
+    <div class="art"><b>Art. 213 — Fases:</b> instauração → inquérito (instrução, defesa, relatório) → julgamento.</div>
+    <div class="key"><b>Art. 214 — Prazo do PAD:</b> <span class="num">60 dias</span>, prorrogável por igual prazo. Princípios: contraditório e ampla defesa (art. 215).</div>
+    <div class="art"><b>Art. 247</b> — Dia do Servidor Público: <b>28 de outubro</b>.</div>
+  </div></details>
+
+  <!-- ===================== 2. LEI ORGÂNICA ===================== -->
+  <h2 class="sec" id="organica">2. Lei Orgânica de Cambé <span class="badge mun">Títulos I–III</span></h2>
+  <div class="box">
+    <p class="disc">O edital cobra os <b>Títulos I, II e III</b>. Em geral tratam de: <b>Título I</b> — o Município (organização político-administrativa, competências, símbolos, divisão); <b>Título II</b> — organização dos Poderes (Legislativo/Câmara, processo legislativo, Executivo/Prefeito); <b>Título III</b> — organização administrativa e servidores municipais. Estude no PDF oficial e cruze com os arts. 29–31 da CF (Municípios).</p>
+    <div class="links" style="margin-top:6px">
+      <a href="https://www.cambe.pr.gov.br/index.php/download/lei-organica-do-municipio-de-cambe-2/">Baixar Lei Orgânica de Cambé (Prefeitura)</a>
+      <a href="https://www.cambe.pr.leg.br/lei-organica-2">Lei Orgânica de Cambé (Câmara)</a>
+    </div>
+    <div class="key">Ponto confirmado: a <b>Câmara de Cambé é composta por 10 vereadores</b>.</div>
+  </div>
+
+  <!-- ===================== 3. CF 37-41 ===================== -->
+  <h2 class="sec" id="cf">3. Constituição Federal — arts. 37 a 41 <span class="badge fed">Federal</span></h2>
+
+  <details open><summary>Art. 37 — Princípios e regras ⭐⭐</summary><div class="inner">
+    <div class="key"><b>Princípios (LIMPE):</b> Legalidade, Impessoalidade, Moralidade, Publicidade, Eficiência.</div>
+    <div class="art"><b>II</b> — Investidura em cargo/emprego depende de <b>concurso público</b> (salvo cargo em comissão de livre nomeação/exoneração).</div>
+    <div class="art"><b>III</b> — Concurso: validade de <span class="num">até 2 anos</span>, prorrogável <b>1x</b> por igual período.</div>
+    <div class="art"><b>V</b> — Funções de confiança (só servidor efetivo) e cargos em comissão (direção, chefia, assessoramento).</div>
+    <div class="art"><b>VII</b> — Direito de greve: nos termos de lei específica. <b>VIII</b> — Reserva de vagas para PCD.</div>
+    <div class="art"><b>IX</b> — Contratação por <b>tempo determinado</b> para necessidade temporária de excepcional interesse público.</div>
+    <div class="key"><b>XVI — Acumulação remunerada vedada</b>, salvo (com compatibilidade de horário): (a) <b>2 cargos de professor</b>; (b) <b>1 de professor + 1 técnico/científico</b>; (c) <b>2 da saúde</b> com profissões regulamentadas.</div>
+    <div class="key"><b>§4º — Improbidade:</b> suspensão dos direitos políticos, perda da função pública, indisponibilidade dos bens e ressarcimento ao erário, sem prejuízo da ação penal.</div>
+  </div></details>
+
+  <details><summary>Arts. 38 a 41 — Mandato, regime e estabilidade ⭐</summary><div class="inner">
+    <div class="art"><b>Art. 38 — Servidor com mandato eletivo:</b> federal/estadual/distrital → afasta-se; <b>Prefeito</b> → afasta-se, podendo optar pela remuneração; <b>Vereador</b> → havendo compatibilidade de horário, acumula cargo + remuneração.</div>
+    <div class="art"><b>Art. 39</b> — Regime jurídico e planos de carreira. <b>Art. 40</b> — Regime previdenciário próprio (contributivo e solidário).</div>
+    <div class="key"><b>Art. 41 — Estabilidade:</b> após <span class="num">3 anos</span> de efetivo exercício. Como condição, há <b>avaliação especial de desempenho</b>. O estável só perde o cargo por: sentença transitada em julgado; processo administrativo (ampla defesa); avaliação periódica de desempenho.</div>
+  </div></details>
+
+  <!-- ===================== 4. LEI 14.133 ===================== -->
+  <h2 class="sec" id="l14133">4. Lei 14.133/2021 — Licitações e Contratos <span class="badge fed">Federal · a que mais cai</span></h2>
+
+  <details open><summary>Modalidades e princípios ⭐⭐</summary><div class="inner">
+    <div class="key"><b>Modalidades (art. 28) — são 5:</b> pregão, concorrência, concurso, leilão e <b>diálogo competitivo</b>.
+      <br>⚠️ Foram <b>extintos</b> a tomada de preços e o convite (existiam na Lei 8.666).</div>
+    <ul>
+      <li><b>Pregão</b> — bens e serviços <b>comuns</b>.</li>
+      <li><b>Concorrência</b> — bens/serviços especiais e obras/serviços de engenharia.</li>
+      <li><b>Concurso</b> — trabalho técnico, científico ou artístico (prêmio).</li>
+      <li><b>Leilão</b> — alienação de bens (maior lance).</li>
+      <li><b>Diálogo competitivo</b> — inovação/complexidade, com diálogo com licitantes.</li>
+    </ul>
+    <div class="art"><b>Princípios (art. 5):</b> legalidade, impessoalidade, moralidade, publicidade, eficiência, interesse público, probidade, igualdade, planejamento, transparência, segregação de funções, motivação, vinculação ao edital, julgamento objetivo, segurança jurídica, razoabilidade, competitividade, proporcionalidade, celeridade, economicidade, desenvolvimento nacional sustentável.</div>
+  </div></details>
+
+  <details><summary>Critérios de julgamento e fases ⭐</summary><div class="inner">
+    <div class="key"><b>Critérios de julgamento (art. 33):</b> menor preço · maior desconto · melhor técnica ou conteúdo artístico · técnica e preço · maior lance (leilão) · maior retorno econômico.</div>
+    <div class="key"><b>Fases (art. 17), nesta ordem:</b> preparatória → divulgação do edital → apresentação de propostas e lances → <b>julgamento</b> → <b>habilitação</b> → recursal → homologação.
+      <br>📌 Regra: <b>julgamento ANTES da habilitação</b>.</div>
+    <div class="art"><b>Homologação</b> — ato da autoridade que ratifica o resultado e a regularidade do procedimento.</div>
+  </div></details>
+
+  <details><summary>Contratação direta: dispensa e inexigibilidade ⭐</summary><div class="inner">
+    <div class="key"><b>Inexigibilidade (art. 74):</b> quando há <b>inviabilidade de competição</b> — fornecedor exclusivo; serviço técnico especializado de natureza intelectual com notória especialização; profissional artístico consagrado; credenciamento; compra/locação de imóvel específico.</div>
+    <div class="key"><b>Dispensa (art. 75):</b> licitação é possível, mas a lei dispensa. Por valor:
+      <br>• obras e serviços de engenharia: <span class="num">até R$ 100.000</span>;
+      <br>• outros serviços e compras: <span class="num">até R$ 50.000</span>.
+      <br><span class="disc">Valores atualizados anualmente por decreto.</span></div>
+  </div></details>
+
+  <!-- ===================== 5. LEI 8.429 ===================== -->
+  <h2 class="sec" id="l8429">5. Lei 8.429/1992 — Improbidade Administrativa <span class="badge fed">Federal</span></h2>
+  <details open><summary>Espécies de atos e exigência de dolo ⭐</summary><div class="inner">
+    <div class="key"><b>Três espécies de atos de improbidade:</b>
+      <br>• <b>Art. 9 — Enriquecimento ilícito:</b> auferir vantagem patrimonial indevida em razão do cargo.
+      <br>• <b>Art. 10 — Prejuízo ao erário:</b> ação/omissão que cause perda patrimonial ao ente.
+      <br>• <b>Art. 11 — Atentado contra princípios:</b> violar deveres de honestidade, legalidade, lealdade e imparcialidade.</div>
+    <div class="key">⚠️ Após a <b>Lei 14.230/2021</b>, exige-se <b>DOLO</b> (intenção). A mera culpa não configura mais improbidade.</div>
+    <div class="art"><b>Sanções</b> (variam conforme o ato): perda da função, suspensão dos direitos políticos, pagamento de multa civil, proibição de contratar com o Poder Público, ressarcimento integral do dano, perda dos bens adquiridos ilicitamente.</div>
+    <div class="art">A improbidade tem natureza de <b>ação civil</b> (não é crime; não gera prisão), sem prejuízo da responsabilidade penal cabível.</div>
+  </div></details>
+
+  <!-- ===================== 6. LAI ===================== -->
+  <h2 class="sec" id="lai">6. Lei 12.527/2011 — Acesso à Informação (LAI) <span class="badge fed">Federal</span></h2>
+  <details open><summary>Regra, prazos e graus de sigilo ⭐</summary><div class="inner">
+    <div class="key"><b>Regra geral:</b> a <b>publicidade é a regra</b>; o sigilo é a <b>exceção</b>.</div>
+    <div class="art"><b>Prazo de resposta:</b> imediato quando disponível; senão, <span class="num">até 20 dias</span>, prorrogável por <span class="num">mais 10</span> mediante justificativa.</div>
+    <div class="art"><b>Custo:</b> o acesso é gratuito, salvo o <b>custo de reprodução</b> de documentos.</div>
+    <div class="key"><b>Graus de sigilo e prazos máximos:</b>
+      <br>• <b>Ultrassecreta</b> — <span class="num">25 anos</span>;
+      <br>• <b>Secreta</b> — <span class="num">15 anos</span>;
+      <br>• <b>Reservada</b> — <span class="num">5 anos</span>.</div>
+    <div class="art"><b>Transparência ativa</b> (o órgão divulga por conta própria) × <b>passiva</b> (mediante pedido).</div>
+  </div></details>
+
+  <!-- ===================== 7. LEI 13.460 ===================== -->
+  <h2 class="sec" id="l13460">7. Lei 13.460/2017 — Direitos do Usuário <span class="badge fed">Federal</span></h2>
+  <details open><summary>Manifestações, ouvidoria e Carta de Serviços ⭐</summary><div class="inner">
+    <div class="key"><b>Tipos de manifestação:</b> reclamação, denúncia, sugestão, elogio e solicitação.</div>
+    <div class="art"><b>Ouvidoria</b> — recebe, analisa e dá tratamento às manifestações; promove a participação do usuário; propõe melhorias. (Não julga nem condena.)</div>
+    <div class="art"><b>Carta de Serviços ao Usuário</b> — informa os serviços prestados, requisitos e prazos de atendimento.</div>
+    <div class="art"><b>Diretrizes de atendimento:</b> presunção de boa-fé, igualdade, qualidade, cortesia e tratamento adequado.</div>
+  </div></details>
+
+  <!-- ===================== 8. LGPD ===================== -->
+  <h2 class="sec" id="lgpd">8. LGPD — Lei 13.709/2018 <span class="badge fed">Federal</span></h2>
+  <details open><summary>Conceitos, agentes e princípios ⭐</summary><div class="inner">
+    <div class="art"><b>Aplica-se</b> ao tratamento de dados por pessoa natural ou jurídica, de direito público ou privado, inclusive em meios digitais.</div>
+    <div class="key"><b>Dados pessoais sensíveis:</b> origem racial/étnica, convicção religiosa, opinião política, filiação sindical, dado referente à saúde/vida sexual, genético ou biométrico. (Proteção reforçada — risco de discriminação.)</div>
+    <div class="key"><b>Agentes:</b>
+      <br>• <b>Titular</b> — pessoa natural a quem os dados se referem;
+      <br>• <b>Controlador</b> — decide sobre o tratamento;
+      <br>• <b>Operador</b> — trata os dados em nome do controlador;
+      <br>• <b>Encarregado (DPO)</b> — canal entre controlador, titulares e a ANPD.</div>
+    <div class="art"><b>ANPD</b> — Autoridade Nacional de Proteção de Dados: fiscaliza e aplica a lei.</div>
+    <div class="art"><b>Consentimento:</b> livre, informado e inequívoco. <b>Princípios (art. 6):</b> finalidade, adequação, necessidade, livre acesso, qualidade, transparência, segurança, prevenção, não discriminação, responsabilização.</div>
+  </div></details>
+
+  <div class="box tip" style="margin-top:24px">
+    <b>Aviso de precisão:</b> as leis federais estão com conteúdo exato. O Estatuto de Cambé foi reproduzido do texto oficial consolidado, mas como é lei municipal com várias alterações, na dúvida confirme no PDF oficial (link no topo). Os valores de dispensa da Lei 14.133 mudam por decreto a cada ano.
+  </div>
+
+  <button class="toplink" onclick="document.getElementById('topo').scrollIntoView({behavior:'smooth'})">↑</button>
+</body>
+</html>

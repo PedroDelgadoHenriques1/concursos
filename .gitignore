@@ -1,0 +1,9 @@
+# arquivos temporários de extração de texto
+*.tmp
+edital*.txt
+cabecalho.txt
+
+# sistema
+Thumbs.db
+desktop.ini
+.DS_Store
