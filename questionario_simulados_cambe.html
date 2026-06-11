@@ -2,7 +2,11 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Simulados Cambé">
+<meta name="theme-color" content="#f6f1e7">
 <title>Simulados — Assistente Administrativo III · Cambé</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +21,9 @@
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   body{
     background:var(--bg); color:var(--ink); font-family:'Spline Sans',sans-serif;
-    line-height:1.55; padding:18px 16px 60px; max-width:760px; margin:0 auto; min-height:100vh;
+    line-height:1.55; max-width:760px; margin:0 auto; min-height:100vh; -webkit-text-size-adjust:100%;
+    padding:max(18px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right))
+            calc(60px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
   }
   .kicker{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;}
   h1{font-family:'Fraunces',serif;font-weight:600;font-size:1.8rem;line-height:1.05;margin:6px 0 4px;}
