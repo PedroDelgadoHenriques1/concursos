@@ -167,9 +167,52 @@
   .install .inst{padding:0 16px 16px;font-size:.87rem;color:var(--ink);line-height:1.65;}
   .install .inst b{color:#9a5a13;}
   .install .step{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;}
+
+  /* ===== REDAÇÃO (menu topo) ===== */
+  .topnav{display:flex;gap:8px;margin-bottom:16px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:50;}
+  .topnav button{flex:1;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--paper);font-family:inherit;font-weight:700;font-size:.92rem;cursor:pointer;color:var(--muted);}
+  .topnav button.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+  #redView{display:none;}
+  #redView h2.sec{font-family:'Fraunces',serif;font-size:1.3rem;margin:24px 0 12px;padding-top:10px;border-top:2px solid var(--accent);color:#9a5a13;}
+  #redView details{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;}
+  #redView summary{cursor:pointer;padding:14px 16px;font-weight:600;font-size:.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center;color:var(--ink);}
+  #redView summary::-webkit-details-marker{display:none;}
+  #redView summary:after{content:"+";color:var(--accent);font-size:1.3rem;font-weight:700;}
+  #redView details[open] summary:after{content:"\2013";}
+  #redView .inner{padding:0 16px 16px;font-size:.92rem;}
+  #redView .inner b{color:#9a5a13;}
+  #redView .key{background:#fff6e8;border-left:3px solid var(--accent);border-radius:6px;padding:9px 12px;margin:10px 0;font-size:.9rem;}
+  #redView ul{margin:6px 0 6px 18px;} #redView li{margin-bottom:4px;}
+  #redView .pill{display:inline-block;background:var(--accent-soft);color:#9a5a13;border-radius:6px;padding:1px 8px;font-size:.82em;font-weight:600;margin:2px 2px;}
+  #redView .grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;}
+  @media(max-width:520px){#redView .grid2{grid-template-columns:1fr;}}
+  #redView .writer{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;}
+  #redView .tema-sel{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px;font-family:inherit;font-size:.9rem;margin-bottom:10px;}
+  #redView .temabox{background:#fff6e8;border:1px solid #e6c89a;border-radius:10px;padding:12px 14px;font-size:.88rem;margin-bottom:12px;display:none;}
+  #redView .temabox.show{display:block;}
+  #redView .temabox b{color:#9a5a13;}
+  #redView textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:12px;padding:14px;font-family:'Spline Sans',sans-serif;font-size:1rem;line-height:1.9;resize:vertical;color:var(--ink);background:repeating-linear-gradient(var(--paper),var(--paper) 33px,#eee5cf 34px);}
+  #redView textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent);}
+  #redView .meters{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:.8rem;}
+  #redView .meter{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-weight:600;}
+  #redView .meter.ok{background:var(--green-soft);border-color:#9fcfae;color:#1f5e3c;}
+  #redView .meter.warn{background:#fdeede;border-color:#e6c89a;color:#9a5a13;}
+  #redView .wbtns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  #redView .wbtns button{flex:1;min-width:120px;padding:11px;border-radius:10px;border:1px solid var(--line);background:var(--paper);font-family:inherit;font-weight:700;font-size:.84rem;cursor:pointer;color:var(--ink);}
+  #redView .wbtns .prim{background:var(--accent);color:#fff;border-color:var(--accent);}
+  #redView .savenote{font-size:.74rem;color:var(--green);font-weight:600;margin-top:8px;min-height:15px;}
+  #redView .check label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:.9rem;border-bottom:1px solid var(--line);cursor:pointer;}
+  #redView .check label:last-child{border-bottom:none;}
+  #redView .check input{margin-top:4px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto;}
 </style>
 </head>
 <body>
+<div class="topnav">
+  <button id="navSim" class="on" onclick="showView('sim')">📝 Simulados</button>
+  <button id="navRed" onclick="showView('red')">✍️ Redação</button>
+</div>
+<div id="simView">
+
 
 <!-- START -->
 <div id="start">
@@ -238,6 +281,79 @@
     <button class="home" id="homeBtn">Escolher outro</button>
   </div>
   <div class="foot">Meta de aprovação simulada: 30+ acertos e nenhuma matéria zerada.</div>
+</div>
+
+</div>
+
+<div id="redView">
+<div class="kicker">Concurso Cambé 001/2026 · Prova discursiva</div>
+  <h1>Treino de Redação</h1>
+  <div class="lead">Dissertativo-argumentativa · 15 a 25 linhas · vale 50 pontos (mínimo 25). Zerar elimina. Em 2 dias: leia o guia, treine 1 tema por vez e use o checklist antes de "entregar".</div>
+
+  <h2 class="sec">1. Como a redação é avaliada</h2>
+  <details open><summary>Pontuação e o que derruba</summary><div class="inner">
+    <div class="key"><b>50 pontos</b>, mínimo <b>25</b> para não ser eliminado. Extensão: <b>15 a 25 linhas</b>. Texto abaixo do mínimo, em branco ou fora do tema = nota muito baixa ou zero (eliminação).</div>
+    <b>O que a banca avalia:</b>
+    <ul>
+      <li><b>Atendimento ao tema</b> e ao tipo (dissertativo-argumentativo);</li>
+      <li><b>Argumentação</b> — ideias desenvolvidas, não só citadas;</li>
+      <li><b>Coesão e coerência</b> — uso de conectivos, ligação entre as partes;</li>
+      <li><b>Norma culta</b> — ortografia, pontuação, concordância, crase, acentuação;</li>
+      <li><b>Estrutura</b> — introdução, desenvolvimento e conclusão bem marcados.</li>
+    </ul>
+    <div class="key"><b>O que mais derruba nota:</b> fugir do tema, escrever menos de 15 linhas, usar 1ª pessoa/opinião informal ("eu acho"), gírias, copiar o texto de apoio, letra ilegível e rasuras. Escreva com <b>impessoalidade</b> (3ª pessoa).</div>
+  </div></details>
+
+  <h2 class="sec">2. Estrutura que sempre funciona</h2>
+  <details open><summary>O esqueleto (introdução → desenvolvimento → conclusão)</summary><div class="inner">
+    <div class="key"><b>Introdução (3–4 linhas):</b> apresente o tema de forma geral + a sua <b>tese</b> (seu ponto de vista sobre o problema). Termine deixando claro o que vai defender.</div>
+    <div class="key"><b>Desenvolvimento 1 (4–6 linhas):</b> 1º argumento. Estrutura: afirmação → explicação → exemplo/repertório (lei, dado, fato social).</div>
+    <div class="key"><b>Desenvolvimento 2 (4–6 linhas):</b> 2º argumento, diferente do primeiro, na mesma lógica: afirma → explica → exemplifica.</div>
+    <div class="key"><b>Conclusão (3–4 linhas):</b> retome a tese com outras palavras e feche. Em concurso, é ótimo terminar com uma <b>proposta/solução</b> (o que o poder público/servidor pode fazer).</div>
+    <b>Modelo de "esqueleto" pronto pra copiar mentalmente:</b>
+    <ul>
+      <li><b>Intro:</b> "É inegável que [tema] representa [importância] na administração pública. Nesse contexto, [sua tese]."</li>
+      <li><b>Dev1:</b> "Em primeiro lugar, [argumento 1]. Isso porque [explicação]. Por exemplo, [repertório]."</li>
+      <li><b>Dev2:</b> "Além disso, [argumento 2]. Tal fato [explicação], como se observa em [repertório]."</li>
+      <li><b>Concl:</b> "Portanto, [retoma a tese]. Cabe ao poder público [proposta], a fim de [objetivo]."</li>
+    </ul>
+  </div></details>
+
+  <h2 class="sec">3. Conectivos (cole no texto pra ganhar coesão)</h2>
+  <details><summary>Ver conectivos por função</summary><div class="inner">
+    <div class="grid2">
+      <div><b>Início/1º argumento:</b><br><span class="pill">Em primeiro lugar</span><span class="pill">Inicialmente</span><span class="pill">A princípio</span></div>
+      <div><b>Adição:</b><br><span class="pill">Além disso</span><span class="pill">Ademais</span><span class="pill">Outrossim</span></div>
+      <div><b>Oposição:</b><br><span class="pill">Contudo</span><span class="pill">Entretanto</span><span class="pill">Por outro lado</span></div>
+      <div><b>Causa:</b><br><span class="pill">Visto que</span><span class="pill">Uma vez que</span><span class="pill">Já que</span></div>
+      <div><b>Consequência:</b><br><span class="pill">Portanto</span><span class="pill">Dessa forma</span><span class="pill">Por conseguinte</span></div>
+      <div><b>Exemplificação:</b><br><span class="pill">Por exemplo</span><span class="pill">A exemplo de</span><span class="pill">Como se vê em</span></div>
+      <div><b>Conclusão:</b><br><span class="pill">Diante do exposto</span><span class="pill">Em suma</span><span class="pill">Logo</span></div>
+      <div><b>Ênfase:</b><br><span class="pill">Sobretudo</span><span class="pill">De fato</span><span class="pill">Certamente</span></div>
+    </div>
+  </div></details>
+
+  <h2 class="sec">4. Temas prováveis (com roteiro pronto)</h2>
+  <p style="font-size:.85rem;color:var(--muted);margin-bottom:10px;">Para cargo de administração municipal, os temas giram em torno de serviço público, ética, cidadania e gestão. Estude o roteiro de cada um — se cair algo parecido, você já tem a estrutura.</p>
+  <div id="temasList"></div>
+
+  <h2 class="sec">5. Área de treino</h2>
+  <div class="writer">
+    <select class="tema-sel" id="temaSel"><option value="-1">Escolha um tema para treinar…</option></select>
+    <div class="temabox" id="temaBox"></div>
+    <textarea id="essay" placeholder="Escreva aqui sua redação (15 a 25 linhas). Use 3ª pessoa, conectivos e mantenha intro / desenvolvimento / conclusão…"></textarea>
+    <div class="meters" id="meters"></div>
+    <div class="wbtns">
+      <button class="prim" id="btnTimer">▶ Iniciar cronômetro</button>
+      <button id="btnClear">Limpar</button>
+    </div>
+    <div class="savenote" id="saveNote"></div>
+  </div>
+
+  <h2 class="sec">6. Checklist antes de "entregar"</h2>
+  <div class="writer check" id="checklist"></div>
+
+  <div class="foot">Feito para o seu treino. O melhor mesmo é escrever de verdade e pedir uma correção detalhada — cole seu texto no chat que eu avalio pela régua da banca.</div>
 </div>
 
 <script>
@@ -679,6 +795,134 @@ function uiConfirm(msg){
     ov.addEventListener('click',(e)=>{ if(e.target===ov) done(false); });
   });
 }
+
+
+/* ===== NAVEGAÇÃO SIMULADOS x REDAÇÃO ===== */
+function showView(v){
+  document.getElementById('simView').style.display=v==='sim'?'block':'none';
+  document.getElementById('redView').style.display=v==='red'?'block':'none';
+  document.getElementById('navSim').classList.toggle('on',v==='sim');
+  document.getElementById('navRed').classList.toggle('on',v==='red');
+  window.scrollTo(0,0);
+}
+
+
+const TEMAS=[
+ {t:'A importância da ética no serviço público',
+  tese:'A ética é o alicerce da confiança entre o Estado e o cidadão.',
+  args:['O servidor ético zela pelo interesse público acima do próprio (impessoalidade e moralidade — art. 37 da CF).','A falta de ética gera corrupção, desperdício e descrédito das instituições.'],
+  rep:'Princípios da administração (LIMPE); Lei de Improbidade (8.429/92); casos de melhoria quando há transparência.'},
+ {t:'Transparência e acesso à informação na administração pública',
+  tese:'A transparência é um dever do Estado e um direito do cidadão, essencial ao controle social.',
+  args:['A publicidade é regra na administração; o sigilo, exceção (Lei 12.527/2011 - LAI).','O acesso à informação permite ao cidadão fiscalizar o uso do dinheiro público.'],
+  rep:'LAI (Lei 12.527/2011); portais de transparência; princípio da publicidade (art. 37, CF).'},
+ {t:'A qualidade no atendimento ao cidadão',
+  tese:'Um atendimento de qualidade humaniza o serviço público e fortalece a cidadania.',
+  args:['O cidadão é o destinatário final do serviço; atendê-lo com cortesia e presteza é dever do servidor.','Bom atendimento reduz burocracia, filas e retrabalho, elevando a eficiência.'],
+  rep:'Lei 13.460/2017 (direitos do usuário); Carta de Serviços ao Usuário; princípio da eficiência.'},
+ {t:'O papel do servidor público na sociedade',
+  tese:'O servidor é o elo entre o Estado e a população, responsável por concretizar direitos.',
+  args:['Exerce função que pertence à sociedade, não a si mesmo, sustentada pelos tributos.','Sua atuação impacta diretamente saúde, educação e serviços essenciais.'],
+  rep:'Regime estatutário; deveres do servidor; impessoalidade e continuidade do serviço público.'},
+ {t:'Tecnologia e modernização da gestão pública',
+  tese:'A tecnologia é aliada da eficiência e da transparência na administração.',
+  args:['A digitalização agiliza processos, reduz custos e aproxima o cidadão (governo digital).','Exige, porém, proteção de dados e inclusão de quem tem menos acesso.'],
+  rep:'LGPD (Lei 13.709/2018); serviços online (gov.br); assinatura/certificação digital.'},
+ {t:'Combate à corrupção e à improbidade administrativa',
+  tese:'Combater a corrupção é condição para uma gestão pública justa e eficiente.',
+  args:['A improbidade lesa o erário e priva a população de serviços (Lei 8.429/92).','Controle social, transparência e punição efetiva são as principais armas.'],
+  rep:'Lei de Improbidade (8.429/92); sanções do art. 37, §4º, CF; órgãos de controle.'},
+ {t:'Inclusão e acessibilidade nos serviços públicos',
+  tese:'Garantir acessibilidade é assegurar igualdade no acesso aos direitos.',
+  args:['Serviços acessíveis respeitam a dignidade e a isonomia de pessoas com deficiência e idosos.','Reserva de vagas e adaptações são obrigações do Estado, não favores.'],
+  rep:'Reserva de vagas a PCD (art. 37, VIII, CF); princípio da igualdade; atendimento prioritário.'}
+];
+
+const CHECK=[
+ 'O texto atende exatamente ao tema proposto?',
+ 'É dissertativo-argumentativo (defende um ponto de vista, não narra)?',
+ 'Tem introdução com tese clara?',
+ 'Tem 2 argumentos desenvolvidos (não só citados)?',
+ 'Usei repertório (lei, dado ou fato) para sustentar?',
+ 'A conclusão retoma a tese e fecha (de preferência com proposta)?',
+ 'Usei conectivos ligando as partes?',
+ 'Escrevi em 3ª pessoa (sem "eu acho", sem gíria)?',
+ 'Está entre 15 e 25 linhas?',
+ 'Revisei concordância, pontuação, crase e acentuação?'
+];
+
+let canSave=true; try{localStorage.setItem('__t','1');localStorage.removeItem('__t');}catch(e){canSave=false;}
+
+// render temas (guia)
+const tl=$('temasList');
+TEMAS.forEach((tm,i)=>{
+  const d=document.createElement('details');
+  d.innerHTML='<summary>'+(i+1)+'. '+tm.t+'</summary><div class="inner">'+
+    '<div class="key"><b>Tese sugerida:</b> '+tm.tese+'</div>'+
+    '<b>Argumentos:</b><ul><li>'+tm.args[0]+'</li><li>'+tm.args[1]+'</li></ul>'+
+    '<b>Repertório pra citar:</b> '+tm.rep+'</div>';
+  tl.appendChild(d);
+});
+// preencher select
+TEMAS.forEach((tm,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=(i+1)+'. '+tm.t; $('temaSel').appendChild(o); });
+
+// checklist
+const cl=$('checklist');
+CHECK.forEach((c,i)=>{ const l=document.createElement('label'); l.innerHTML='<input type="checkbox" data-i="'+i+'"> <span>'+c+'</span>'; cl.appendChild(l); });
+
+// tema selecionado
+$('temaSel').onchange=()=>{
+  const i=+$('temaSel').value; const box=$('temaBox');
+  if(i<0){ box.classList.remove('show'); saveDraft(); return; }
+  const tm=TEMAS[i];
+  box.innerHTML='<b>Tema:</b> '+tm.t+'<br><b>Tese:</b> '+tm.tese+'<br><b>Argumentos:</b> 1) '+tm.args[0]+' 2) '+tm.args[1]+'<br><b>Repertório:</b> '+tm.rep;
+  box.classList.add('show'); saveDraft();
+};
+
+// contadores
+function updateMeters(){
+  const txt=$('essay').value;
+  const words=(txt.trim().match(/\S+/g)||[]).length;
+  const chars=txt.replace(/\s/g,'').length;
+  // estimativa de linhas: ~60 caracteres por linha da folha oficial
+  const linhas=Math.max(txt.trim()?1:0, Math.round(txt.replace(/\n/g,' ').length/60));
+  const okLin = linhas>=15 && linhas<=25;
+  const m=$('meters');
+  m.innerHTML=
+    '<span class="meter '+(okLin?'ok':'warn')+'">≈ <b>'+linhas+'</b> linhas <span style="opacity:.7">(alvo 15–25)</span></span>'+
+    '<span class="meter"><b>'+words+'</b> palavras</span>'+
+    '<span class="meter"><b>'+chars+'</b> caracteres</span>';
+}
+
+// salvar rascunho
+let stO=null;
+function flash(msg){ const n=$('saveNote'); n.textContent=msg; clearTimeout(stO); stO=setTimeout(()=>{n.textContent='';},1500); }
+function saveDraft(){
+  if(!canSave) return;
+  try{ localStorage.setItem('redacaoCambe', JSON.stringify({tema:$('temaSel').value, text:$('essay').value})); flash('✓ rascunho salvo'); }catch(e){}
+}
+function loadDraft(){
+  if(!canSave) return;
+  try{
+    const d=JSON.parse(localStorage.getItem('redacaoCambe')||'null');
+    if(d){ $('essay').value=d.text||''; if(d.tema){ $('temaSel').value=d.tema; $('temaSel').onchange(); } }
+  }catch(e){}
+}
+let deb=null;
+$('essay').addEventListener('input',()=>{ updateMeters(); clearTimeout(deb); deb=setTimeout(saveDraft,600); });
+
+// cronômetro
+let tInt=null,tSec=0,running=false;
+$('btnTimer').onclick=()=>{
+  if(running){ clearInterval(tInt); running=false; $('btnTimer').textContent='▶ Continuar ('+fmt(tSec)+')'; return; }
+  running=true; $('btnTimer').textContent='⏸ Pausar';
+  tInt=setInterval(()=>{ tSec++; $('btnTimer').textContent='⏸ '+fmt(tSec); },1000);
+};
+function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+
+$('btnClear').onclick=()=>{ if($('essay').value && !window.__c){ $('saveNote').textContent='Toque de novo em Limpar para confirmar.'; window.__c=true; setTimeout(()=>{window.__c=false;$('saveNote').textContent='';},3000); return; } $('essay').value=''; window.__c=false; updateMeters(); saveDraft(); };
+
+loadDraft(); updateMeters();
 
 initStorage().then(buildStart);
 </script>
